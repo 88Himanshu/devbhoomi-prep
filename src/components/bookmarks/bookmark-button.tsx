@@ -31,6 +31,8 @@ export function BookmarkButton({
   const [pending, start] = useTransition();
   const router = useRouter();
   const pathname = usePathname();
+  // Bookmarks need an account; the static showcase site has none. (After the hooks, to keep hook order stable.)
+  if (process.env.NEXT_PUBLIC_STATIC_SITE === "1") return null;
 
   const toggle = () => {
     const next = !on;

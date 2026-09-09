@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "seed:sql": "tsx scripts/generate-seed-sql.ts"
+    "seed:sql": "tsx scripts/generate-seed-sql.ts",
+    "build:static": "node scripts/build-static.mjs",
+    "preview:static": "npx --yes serve out -l 4173"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

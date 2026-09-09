@@ -15,6 +15,13 @@ import { ExamNav } from "@/components/exams/exam-nav";
 import { ImportantQuestions } from "@/components/exams/important-questions";
 import { MaterialCard, MockTestCard, PaperCard } from "@/components/marketing/catalog-cards";
 
+/** Pre-renders every exams page in the static showcase build; the full app still renders on demand. */
+export async function generateStaticParams() {
+  const { db } = await import("@/lib/data");
+  const rows = await (await db()).select("exams", { eq: { is_active: true } });
+  return rows.map((r) => ({ slug: r.slug }));
+}
+
 export async function generateMetadata({ params }: PageProps<"/exams/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const exam = await getExamBySlug(slug);

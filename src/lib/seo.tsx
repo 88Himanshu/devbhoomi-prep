@@ -14,6 +14,8 @@ export function pageMetadata(opts: { title: string; description: string; path: s
       description: opts.description,
       url: opts.path,
       type: "website",
+      // Absolute so it survives a basePath deployment (metadataBase would drop the sub-path).
+      images: [{ url: `${env.APP_URL}/opengraph-image`, width: 1200, height: 630, alt: SITE_NAME }],
     },
     ...(opts.noIndex ? { robots: { index: false, follow: false } } : {}),
   };

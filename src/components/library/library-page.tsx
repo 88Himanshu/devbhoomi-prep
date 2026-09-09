@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BookOpen, Library, NotebookPen } from "lucide-react";
 import type { Material, PremiumFeature } from "@/lib/types";
 import { getSessionUser } from "@/lib/auth/session";
@@ -105,7 +106,7 @@ export async function LibraryPage({ kind, searchParams }: { kind: "book" | "note
       <Pagination page={page} pageSize={PAGE_SIZE} total={total} basePath={basePath} params={{ q: sp.q, exam: sp.exam, subject: sp.subject, language: sp.language, year: sp.year, sort: sp.sort, access: sp.access }} />
 
       <p className="mt-10 rounded-xl bg-ink-50 px-4 py-3 text-center text-xs text-ink-500">
-        All materials are original, licensed, public-domain or authorised. Devbhoomi Prep does not distribute copyrighted commercial books. See our <a href="/copyright-policy" className="font-medium text-brand-700 underline">Copyright Policy</a>.
+        All materials are original, licensed, public-domain or authorised. Devbhoomi Prep does not distribute copyrighted commercial books. See our <Link href="/copyright-policy" className="font-medium text-brand-700 underline">Copyright Policy</Link>.
       </p>
     </Container>
   );

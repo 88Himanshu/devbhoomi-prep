@@ -2,7 +2,7 @@ import "server-only";
 import { existsSync, mkdirSync } from "node:fs";
 import { readFile, writeFile, unlink } from "node:fs/promises";
 import path from "node:path";
-import { env, getBackend } from "@/lib/env";
+import { env, getBackend, isStaticSite } from "@/lib/env";
 
 /**
  * File storage for PDFs and uploads.
@@ -76,5 +76,10 @@ export function uploadKey(folder: "books" | "notes" | "papers" | "misc", filenam
 }
 
 /** Public URL for serving a stored file through the access-checked route. */
-export const fileUrl = (key: string, opts: { download?: boolean } = {}) =>
-  `/api/files/${sanitizeKey(key)}${opts.download ? "?download=1" : ""}`;
+export const fileUrl = (key: string, opts: { download?: boolean } = {}) => {
+  const safe = sanitizeKey(key);
+  // Static showcase: only the bundled sample files exist, served straight from /public.
+  // No basePath here: next/link adds it; plain <iframe>/<img> callers must add NEXT_PUBLIC_BASE_PATH themselves.
+  if (isStaticSite()) return safe.startsWith("samples/") ? `/${safe}` : "#";
+  return `/api/files/${safe}${opts.download ? "?download=1" : ""}`;
+};

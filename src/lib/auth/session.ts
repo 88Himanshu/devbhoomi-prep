@@ -2,7 +2,7 @@ import "server-only";
 import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getBackend } from "@/lib/env";
+import { getBackend, isStaticSite } from "@/lib/env";
 import { db } from "@/lib/data";
 import type { SessionUser, User } from "@/lib/types";
 import { parseSessionToken, SESSION_COOKIE } from "./cookie";
@@ -24,6 +24,7 @@ export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
 });
 
 async function loadUser(): Promise<User | null> {
+  if (isStaticSite()) return null; // no sessions in the static showcase build
   if (getBackend() === "demo") {
     const store = await cookies();
     const userId = parseSessionToken(store.get(SESSION_COOKIE)?.value);

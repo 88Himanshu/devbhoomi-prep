@@ -3,6 +3,13 @@ import { notFound } from "next/navigation";
 import { getMaterialBySlug } from "@/lib/services/catalog";
 import { MaterialDetail } from "@/components/library/material-detail";
 
+/** Pre-renders every notes page in the static showcase build; the full app still renders on demand. */
+export async function generateStaticParams() {
+  const { db } = await import("@/lib/data");
+  const rows = await (await db()).select("notes", { eq: { is_published: true } });
+  return rows.map((r) => ({ slug: r.slug }));
+}
+
 export async function generateMetadata(props: PageProps<"/notes/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;
   const m = await getMaterialBySlug("note", slug);

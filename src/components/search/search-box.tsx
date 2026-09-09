@@ -30,6 +30,7 @@ export function SearchBox({ className, autoFocus, defaultValue = "", size = "sm"
       const ctrl = new AbortController();
       abort.current = ctrl;
       try {
+        if (process.env.NEXT_PUBLIC_STATIC_SITE === "1") return; // no suggestions API on the static site
         const res = await fetch(`/api/search?q=${encodeURIComponent(t)}`, { signal: ctrl.signal });
         const data = (await res.json()) as { suggestions: Suggestion[] };
         setItems(data.suggestions.slice(0, 10));

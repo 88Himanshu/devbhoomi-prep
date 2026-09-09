@@ -15,6 +15,13 @@ export const env = {
   STORAGE_BUCKET: process.env.SUPABASE_STORAGE_BUCKET ?? "materials",
 };
 
+/**
+ * Static showcase build (GitHub Pages). No server: sessions, APIs, payments and admin
+ * are replaced by "available on the full platform" pages. Set by scripts/build-static.mjs.
+ */
+export const isStaticSite = () => process.env.NEXT_PUBLIC_STATIC_SITE === "1";
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export type Backend = "demo" | "supabase";
 
 export function getBackend(): Backend {

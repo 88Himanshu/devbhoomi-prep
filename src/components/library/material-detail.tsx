@@ -9,6 +9,7 @@ import { featureFor, getRelatedMaterials, incrementViews } from "@/lib/services/
 import { isBookmarked, bookmarkedIds } from "@/lib/services/bookmarks";
 import { getProgress } from "@/lib/services/progress";
 import { fileUrl } from "@/lib/storage";
+import { isStaticSite } from "@/lib/env";
 import { env } from "@/lib/env";
 import { formatDate, formatNumber, LANGUAGE_LABELS } from "@/lib/utils";
 import { Badge, FreeBadge, PremiumBadge } from "@/components/ui/badge";
@@ -44,7 +45,9 @@ export async function MaterialDetail({ kind, slug }: { kind: "book" | "note"; sl
   const subject = subjectMap.get(material.subject_id);
   const exams = material.exam_ids.map((id) => examMap.get(id)).filter(Boolean) as NonNullable<ReturnType<typeof examMap.get>>[];
   const hasAccessFeature = access.canAccess(featureFor(kind));
-  const canRead = access.isAdmin || (material.is_premium ? hasAccessFeature : Boolean(user));
+  // Static showcase: free items are readable without an account (no server to log in to).
+  const staticFree = isStaticSite() && !material.is_premium;
+  const canRead = access.isAdmin || staticFree || (material.is_premium ? hasAccessFeature : Boolean(user));
   const lockedPremium = material.is_premium && !canRead;
   const readUrl = material.file_path ? fileUrl(material.file_path) : null;
   const previewUrl = material.preview_path ? fileUrl(material.preview_path) : null;
@@ -104,7 +107,7 @@ export async function MaterialDetail({ kind, slug }: { kind: "book" | "note"; sl
                     <ButtonLink href={fileUrl(material.file_path!, { download: true })} variant="forest"><Download className="h-4 w-4" />Download</ButtonLink>
                   </>
                 )}
-                {!user && !material.is_premium && <ButtonLink href={`/login?next=${encodeURIComponent(`${basePath}/${material.slug}`)}`}><BookOpen className="h-4 w-4" />Log in to read free</ButtonLink>}
+                {!user && !material.is_premium && !staticFree && <ButtonLink href={`/login?next=${encodeURIComponent(`${basePath}/${material.slug}`)}`}><BookOpen className="h-4 w-4" />Log in to read free</ButtonLink>}
                 <BookmarkButton type={kind} itemId={material.id} initial={saved} showLabel />
               </div>
             </div>
@@ -130,7 +133,7 @@ export async function MaterialDetail({ kind, slug }: { kind: "book" | "note"; sl
               ) : (
                 <PremiumLock title="Premium material" description={access.trialActive ? "Your trial plan does not include this feature. Upgrade to read and download." : "Your free trial has ended. Upgrade to keep reading premium books and notes."} />
               )
-            ) : !user ? (
+            ) : !user && !staticFree ? (
               <Alert tone="info" title="Log in to read">This {kind} is free. <Link href={`/login?next=${encodeURIComponent(`${basePath}/${material.slug}`)}`} className="font-semibold underline">Log in</Link> or <Link href="/signup" className="font-semibold underline">sign up</Link> to read online and download.</Alert>
             ) : readUrl ? (
               <MaterialReader src={readUrl} itemType={kind} itemId={material.id} pages={material.pages} initialPage={progress?.last_position ?? 1} initialPercent={progress?.progress_percent ?? 0} canSave={Boolean(user)} />

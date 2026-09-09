@@ -75,7 +75,7 @@ export function MaterialReader({ src, itemType, itemId, pages, initialPage, init
       </div>
       <iframe
         key={page}
-        src={`${src}#page=${page}&view=FitH`}
+        src={`${src.startsWith("/") ? (process.env.NEXT_PUBLIC_BASE_PATH ?? "") : ""}${src}#page=${page}&view=FitH`}
         title="Document reader"
         className={cn("w-full bg-ink-100", full ? "flex-1" : "h-[70vh] min-h-[420px]")}
       />
