@@ -1,0 +1,53 @@
+import type { Announcement } from "@/lib/types";
+import { daysAgo, daysFromNow } from "./constants";
+
+export const announcements: Announcement[] = [
+  {
+    id: "ann_trial_banner",
+    type: "banner",
+    title: "Start your 30-day free trial",
+    body: "New students get 30 days of full access to books, notes, previous-year papers and mock tests. No card required.",
+    link_url: "/signup",
+    link_label: "Start Free Trial",
+    is_active: true,
+    starts_at: daysAgo(30),
+    ends_at: daysFromNow(180),
+    created_at: daysAgo(30),
+  },
+  {
+    id: "ann_uksssc_mocks",
+    type: "announcement",
+    title: "New UKSSSC Graduate Level mock tests added",
+    body: "Four new full-length mocks based on the latest UKSSSC Graduate Level pattern are now live, with detailed solutions.",
+    link_url: "/mock-tests?exam=uksssc",
+    link_label: "Attempt now",
+    is_active: true,
+    starts_at: daysAgo(6),
+    ends_at: daysFromNow(60),
+    created_at: daysAgo(6),
+  },
+  {
+    id: "ann_ukpsc_calendar",
+    type: "announcement",
+    title: "UKPSC has released its tentative exam calendar",
+    body: "Check the official UKPSC website (psc.uk.gov.in) for dates. Plan your revision with our 8-week study plans.",
+    link_url: "/exams/ukpsc",
+    link_label: "View UKPSC study plan",
+    is_active: true,
+    starts_at: daysAgo(2),
+    ends_at: daysFromNow(45),
+    created_at: daysAgo(2),
+  },
+  {
+    id: "ann_old_offer",
+    type: "banner",
+    title: "Independence Day offer ended",
+    body: "Our Independence Day pricing offer has ended. Regular pricing applies.",
+    link_url: "/pricing",
+    link_label: "See pricing",
+    is_active: false,
+    starts_at: daysAgo(25),
+    ends_at: daysAgo(15),
+    created_at: daysAgo(25),
+  },
+];
