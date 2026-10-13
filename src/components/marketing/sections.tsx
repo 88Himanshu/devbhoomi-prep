@@ -64,7 +64,7 @@ export function TrustStrip({ stats }: { stats: { label: string; value: string; i
 }
 
 const STEPS = [
-  { icon: UserPlus, title: "Create your free account", text: "Sign up in a minute. Your 30-day free trial starts automatically — no card needed." },
+  { icon: UserPlus, title: "Create your free account", text: "Sign up in a minute. Your 7-day free trial starts automatically — no card needed." },
   { icon: BookOpen, title: "Pick your exam & study", text: "Follow the syllabus with original notes and a week-by-week study plan." },
   { icon: ClipboardCheck, title: "Practise with real papers", text: "Attempt previous-year papers and timed mock tests built to the actual exam pattern." },
   { icon: BarChart3, title: "Track & improve", text: "See accuracy by subject, weak areas and score trends, then retake to improve." },
@@ -125,13 +125,13 @@ export function FinalCta({ signedIn }: { signedIn: boolean }) {
       <div className="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-forest-600/40 blur-3xl" aria-hidden="true" />
       <div className="relative">
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Start preparing for your Uttarakhand exam today</h2>
-        <p className="mx-auto mt-3 max-w-xl text-brand-100">30 days free. Notes, previous-year papers, mock tests and analytics in one place.</p>
+        <p className="mx-auto mt-3 max-w-xl text-brand-100">7 days free. Notes, previous-year papers, mock tests and analytics in one place.</p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           {signedIn ? (
             <ButtonLink href="/dashboard" variant="saffron" size="lg">Go to Dashboard</ButtonLink>
           ) : (
             <>
-              <ButtonLink href="/signup" variant="saffron" size="lg">Start 30 Days Free Trial</ButtonLink>
+              <ButtonLink href="/signup" variant="saffron" size="lg">Start 7-Day Free Trial</ButtonLink>
               <ButtonLink href="/exams" variant="outline" size="lg" className="border-brand-600 bg-transparent text-white hover:bg-brand-800">Explore Courses</ButtonLink>
             </>
           )}

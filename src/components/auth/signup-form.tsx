@@ -53,7 +53,7 @@ export function SignupForm({ exams }: { exams: { id: string; name: string }[] })
         </Field>
       </div>
       <div className="rounded-xl border border-forest-200 bg-forest-50 px-4 py-3 text-sm text-forest-800">
-        <span className="font-semibold">Your 30-day free trial starts instantly.</span> No card required.
+        <span className="font-semibold">Your 7-day free trial starts instantly.</span> No card required.
       </div>
       <SubmitButton>Create account & start free trial</SubmitButton>
       <p className="text-center text-xs text-ink-500">

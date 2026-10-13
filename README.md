@@ -2,7 +2,7 @@
 
 A production-ready online learning platform for students preparing for **Uttarakhand competitive government exams** (UKPSC, UKSSSC, Uttarakhand Police, Patwari/Lekhpal, VDO, Forest Guard, Group C, Teaching, UTET and more).
 
-Study materials, notes, previous-year papers, a full online mock-test engine with analytics, a personalised student dashboard, a 30-day free trial, Razorpay subscriptions and a complete admin panel.
+Study materials, notes, previous-year papers, a full online mock-test engine with analytics, a personalised student dashboard, a 7-day free trial, Razorpay subscriptions and a complete admin panel.
 
 ## Quick start (zero configuration)
 

@@ -79,7 +79,7 @@ export async function LibraryPage({ kind, searchParams }: { kind: "note"; search
           {freeCount > 0 && <> · {freeCount} free</>}
           {sp.q && <> for “{sp.q}”</>}
         </p>
-        {locked && !access.isAuthenticated && <p className="text-xs">Sign up for a 30-day free trial to unlock premium {label.toLowerCase()}.</p>}
+        {locked && !access.isAuthenticated && <p className="text-xs">Sign up for a 7-day free trial to unlock premium {label.toLowerCase()}.</p>}
       </div>
 
       {items.length === 0 ? (

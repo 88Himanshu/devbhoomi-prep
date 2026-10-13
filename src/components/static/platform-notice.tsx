@@ -22,7 +22,7 @@ export function PlatformNotice({ icon: Icon = ServerCog, title, description, fea
         <div className="mx-auto mt-6 max-w-xl rounded-xl bg-ink-50 px-4 py-3 text-left text-sm text-ink-700">
           <p>
             You are viewing the static preview of Devbhoomi Prep. {feature ?? "This feature"} runs on the full platform, which
-            includes student accounts, a 30-day free trial, timed mock tests with analytics, secure Razorpay payments and the
+            includes student accounts, a 7-day free trial, timed mock tests with analytics, secure Razorpay payments and the
             admin panel. Everything you can browse here — exam guides, the library, previous-year papers and the mock-test
             catalogue — is exactly what students see on the full site.
           </p>

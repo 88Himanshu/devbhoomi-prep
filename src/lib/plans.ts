@@ -40,14 +40,6 @@ export const PLANS: Plan[] = [
   },
 ];
 
-export const FREE_TRIAL_FEATURES = [
-  "30 Days Free Trial",
-  "Study Materials",
-  "Previous Year Papers",
-  "Mock Tests",
-  "Student Dashboard",
-];
-
 export function getPlan(id: PlanId): Plan {
   const plan = PLANS.find((p) => p.id === id);
   if (!plan) throw new Error(`Unknown plan: ${id}`);

@@ -58,7 +58,7 @@ export function courseJsonLd(opts: { name: string; description: string; path: st
     url: absoluteUrl(opts.path),
     provider: { "@type": "Organization", name: SITE_NAME, sameAs: env.APP_URL },
     isAccessibleForFree: true,
-    offers: { "@type": "Offer", price: "0", priceCurrency: "INR", description: "30-day free trial" },
+    offers: { "@type": "Offer", price: "0", priceCurrency: "INR", description: "7-day free trial" },
   };
 }
 

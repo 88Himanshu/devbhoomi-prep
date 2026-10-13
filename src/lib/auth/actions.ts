@@ -65,7 +65,7 @@ async function setDemoSession(userId: string) {
   });
 }
 
-/** Create the profile row and start the 30-day free trial. Shared by both backends. */
+/** Create the profile row and start the free trial (length from trial settings). Shared by both backends. */
 export async function startTrialProfile(userId: string, extra: Partial<Profile> = {}): Promise<Profile> {
   const trial = await getTrialSettings();
   const now = new Date();
@@ -119,7 +119,7 @@ export async function signUp(_prev: ActionResult | null, formData: FormData): Pr
     sendMail({
       to: user.email,
       subject: "Verify your email – Devbhoomi Prep",
-      body: `Hi ${user.full_name}, confirm your email to secure your account. Your 30-day free trial has already started.`,
+      body: `Hi ${user.full_name}, confirm your email to secure your account. Your 7-day free trial has already started.`,
       link: `${env.APP_URL}/verify-email?token=${token}`,
     });
     await setDemoSession(user.id);
@@ -145,7 +145,7 @@ export async function signUp(_prev: ActionResult | null, formData: FormData): Pr
     });
   }
   if (!data.session) {
-    return { ok: true, message: "Check your inbox to verify your email, then sign in. Your 30-day free trial starts now." };
+    return { ok: true, message: "Check your inbox to verify your email, then sign in. Your 7-day free trial starts now." };
   }
   redirect("/dashboard?welcome=1");
 }

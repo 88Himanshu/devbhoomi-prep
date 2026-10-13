@@ -5,7 +5,7 @@ import type { AccessState, PremiumFeature, SessionUser, Subscription, TrialSetti
 import { getSessionUser } from "@/lib/auth/session";
 
 export const DEFAULT_TRIAL: TrialSettings = {
-  trial_days: 30,
+  trial_days: 7,
   notes: true,
   papers: true,
   mock_tests: true,

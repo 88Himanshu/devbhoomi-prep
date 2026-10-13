@@ -47,7 +47,7 @@ export async function toggleAnnouncement(formData: FormData) {
 
 export async function saveTrialSettings(prev: ActionState | null, formData: FormData): Promise<ActionState> {
   await requireAdmin();
-  const days = num(formData, "trial_days", 30);
+  const days = num(formData, "trial_days", 7);
   if (!Number.isInteger(days) || days < 0 || days > 365) return fail({ trial_days: "Enter 0–365 days" });
   const value: TrialSettings = {
     trial_days: days,

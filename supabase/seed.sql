@@ -896,7 +896,7 @@ on conflict (id) do nothing;
 
 -- announcements (4 rows)
 insert into public.announcements (id, type, title, body, link_url, link_label, is_active, starts_at, ends_at, created_at) values
-  ('ann_trial_banner', 'banner', 'Start your 30-day free trial', 'New students get 30 days of full access to notes, previous-year papers and mock tests. No card required.', '/signup', 'Start Free Trial', true, '2026-08-02T09:00:00.000Z', '2027-02-28T09:00:00.000Z', '2026-08-02T09:00:00.000Z'),
+  ('ann_trial_banner', 'banner', 'Start your 7-day free trial', 'New students get 7 days of full access to notes, previous-year papers and mock tests. No card required.', '/signup', 'Start Free Trial', true, '2026-08-02T09:00:00.000Z', '2027-02-28T09:00:00.000Z', '2026-08-02T09:00:00.000Z'),
   ('ann_uksssc_mocks', 'announcement', 'New UKSSSC Graduate Level mock tests added', 'Four new full-length mocks based on the latest UKSSSC Graduate Level pattern are now live, with detailed solutions.', '/mock-tests?exam=uksssc', 'Attempt now', true, '2026-08-26T09:00:00.000Z', '2026-10-31T09:00:00.000Z', '2026-08-26T09:00:00.000Z'),
   ('ann_ukpsc_calendar', 'announcement', 'UKPSC has released its tentative exam calendar', 'Check the official UKPSC website (psc.uk.gov.in) for dates. Plan your revision with our 8-week study plans.', '/exams/ukpsc', 'View UKPSC study plan', true, '2026-08-30T09:00:00.000Z', '2026-10-16T09:00:00.000Z', '2026-08-30T09:00:00.000Z'),
   ('ann_old_offer', 'banner', 'Independence Day offer ended', 'Our Independence Day pricing offer has ended. Regular pricing applies.', '/pricing', 'See pricing', false, '2026-08-07T09:00:00.000Z', '2026-08-17T09:00:00.000Z', '2026-08-07T09:00:00.000Z')
@@ -904,7 +904,7 @@ on conflict (id) do nothing;
 
 -- settings (2 rows)
 insert into public.settings (key, value, updated_at) values
-  ('trial', '{"trial_days":30,"notes":true,"papers":true,"mock_tests":true,"solutions":true,"analytics":true}'::jsonb, '2026-09-01T09:00:00.000Z'),
+  ('trial', '{"trial_days":7,"notes":true,"papers":true,"mock_tests":true,"solutions":true,"analytics":true}'::jsonb, '2026-09-01T09:00:00.000Z'),
   ('site', '{"support_email":"support@devbhoomiprep.in","support_phone":"+91 94100 00000","address":"Dehradun, Uttarakhand"}'::jsonb, '2026-09-01T09:00:00.000Z')
 on conflict (key) do nothing;
 

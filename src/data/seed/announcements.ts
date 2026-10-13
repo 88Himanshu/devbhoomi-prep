@@ -5,8 +5,8 @@ export const announcements: Announcement[] = [
   {
     id: "ann_trial_banner",
     type: "banner",
-    title: "Start your 30-day free trial",
-    body: "New students get 30 days of full access to notes, previous-year papers and mock tests. No card required.",
+    title: "Start your 7-day free trial",
+    body: "New students get 7 days of full access to notes, previous-year papers and mock tests. No card required.",
     link_url: "/signup",
     link_label: "Start Free Trial",
     is_active: true,

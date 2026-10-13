@@ -72,7 +72,7 @@ function Inner({ materials, subjects, exams, years }: Props) {
       </div>
       <div className="mt-5 flex flex-wrap items-center justify-between gap-2 text-sm text-ink-500">
         <p><span className="font-semibold text-ink-900">{total}</span> {total === 1 ? "result" : "results"}{freeCount > 0 && <> · {freeCount} free</>}{q && <> for “{q}”</>}</p>
-        <p className="text-xs">Sign up for a 30-day free trial on the full platform to unlock premium {label.toLowerCase()}.</p>
+        <p className="text-xs">Sign up for a 7-day free trial on the full platform to unlock premium {label.toLowerCase()}.</p>
       </div>
       {items.length === 0 ? (
         <EmptyState className="mt-6" icon={Library} title={`No ${label.toLowerCase()} match these filters`} description="Try a different subject or exam, or clear the filters." action={<ButtonLink href={basePath} variant="outline" size="sm">Clear filters</ButtonLink>} />

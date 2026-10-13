@@ -21,7 +21,7 @@ export default function TermsPage() {
       <section>
         <h2>3. Free trial and subscriptions</h2>
         <ul>
-          <li>New accounts receive a 30-day free trial with access to selected premium features. The trial ends automatically; no payment is taken unless you buy a plan.</li>
+          <li>New accounts receive a 7-day free trial with access to selected premium features. The trial ends automatically; no payment is taken unless you buy a plan.</li>
           <li>Paid plans (Monthly, 3 Months, Yearly) are prepaid for a fixed period and do not auto-renew. Premium access ends on the plan expiry date unless you purchase again.</li>
           <li>Prices are in Indian Rupees and include applicable taxes unless stated otherwise. Payments are processed by Razorpay.</li>
           <li>Refunds are governed by our Refund Policy.</li>

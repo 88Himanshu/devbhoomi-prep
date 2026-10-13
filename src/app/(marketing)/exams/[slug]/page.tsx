@@ -93,7 +93,7 @@ export default async function ExamPage({ params }: PageProps<"/exams/[slug]">) {
               {user ? (
                 freeMock && <ButtonLink href={`/mock-tests/${freeMock.slug}`}>Attempt a mock test</ButtonLink>
               ) : (
-                <ButtonLink href="/signup">Start 30 Days Free Trial</ButtonLink>
+                <ButtonLink href="/signup">Start 7-Day Free Trial</ButtonLink>
               )}
               <ButtonLink href={`/previous-year-papers?exam=${exam.id}`} variant="outline">Previous year papers</ButtonLink>
             </div>
@@ -230,8 +230,8 @@ export default async function ExamPage({ params }: PageProps<"/exams/[slug]">) {
               </dl>
             </div>
             <div className="rounded-2xl bg-brand-900 p-5 text-white">
-              <p className="text-sm font-semibold">{user ? "Ready to practise?" : "Start your 30-day free trial"}</p>
-              <p className="mt-1 text-xs text-brand-100">{user ? "Attempt a timed mock and see subject-wise analysis." : "Notes, papers and mock tests for this exam — free for 30 days."}</p>
+              <p className="text-sm font-semibold">{user ? "Ready to practise?" : "Start your 7-day free trial"}</p>
+              <p className="mt-1 text-xs text-brand-100">{user ? "Attempt a timed mock and see subject-wise analysis." : "Notes, papers and mock tests for this exam — free for 7 days."}</p>
               {user ? (
                 freeMock ? <ButtonLink href={`/mock-tests/${freeMock.slug}`} variant="saffron" size="sm" className="mt-4 w-full">Attempt a mock</ButtonLink> : <ButtonLink href="/mock-tests" variant="saffron" size="sm" className="mt-4 w-full">Browse mock tests</ButtonLink>
               ) : (

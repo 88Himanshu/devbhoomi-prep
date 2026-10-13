@@ -5,7 +5,7 @@ export const settings: Setting[] = [
   {
     key: "trial",
     value: {
-      trial_days: 30,
+      trial_days: 7,
       notes: true,
       papers: true,
       mock_tests: true,

@@ -5,7 +5,7 @@ export const metadata = pageMetadata({ title: "Refund Policy", description: "Whe
 
 export default function RefundPolicyPage() {
   return (
-    <LegalLayout title="Refund Policy" lastUpdated="1 September 2026" intro="We want you to try the platform risk-free, which is why every account starts with a 30-day free trial. For paid plans, here is exactly when a refund applies.">
+    <LegalLayout title="Refund Policy" lastUpdated="1 September 2026" intro="We want you to try the platform risk-free, which is why every account starts with a 7-day free trial. For paid plans, here is exactly when a refund applies.">
       <section>
         <h2>1. Eligibility for a full refund</h2>
         <p>You can request a <strong>full refund of your first purchase</strong> if all of the following are true:</p>

@@ -23,7 +23,7 @@ create table if not exists public.profiles (
   preferred_exam_id  text,
   education_level    text,
   trial_started_at   timestamptz not null default now(),
-  trial_ends_at      timestamptz not null default now() + interval '30 days',
+  trial_ends_at      timestamptz not null default now() + interval '7 days',
   study_streak_days  int not null default 0,
   last_active_date   date,
   updated_at         timestamptz not null default now()
@@ -32,7 +32,7 @@ create table if not exists public.profiles (
 -- Mirror new auth users into public.users and start a trial profile.
 create or replace function public.handle_new_user() returns trigger
 language plpgsql security definer set search_path = public as $$
-declare trial_days int := coalesce((select (value->>'trial_days')::int from public.settings where key = 'trial'), 30);
+declare trial_days int := coalesce((select (value->>'trial_days')::int from public.settings where key = 'trial'), 7);
 begin
   insert into public.users (id, email, full_name, mobile, email_verified)
   values (new.id, new.email, coalesce(new.raw_user_meta_data->>'full_name',''), new.raw_user_meta_data->>'mobile', new.email_confirmed_at is not null)

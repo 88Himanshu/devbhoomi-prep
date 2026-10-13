@@ -107,7 +107,7 @@ export default async function MockTestDetailPage(props: PageProps<"/mock-tests/[
           <Card>
             <CardContent className="pt-5">
               <p className="text-sm font-semibold text-ink-900">Attempt this test on the full platform</p>
-              <p className="mt-1 text-sm text-ink-700">Timed CBT interface, question palette, auto-save, instant grading, detailed solutions and analytics. New students get a 30-day free trial.</p>
+              <p className="mt-1 text-sm text-ink-700">Timed CBT interface, question palette, auto-save, instant grading, detailed solutions and analytics. New students get a 7-day free trial.</p>
               <ButtonLink href="/signup" className="mt-4 w-full" size="lg"><Play className="h-4 w-4" aria-hidden="true" /> Start on the full platform</ButtonLink>
               <p className="mt-3 text-center text-xs text-ink-500">{test.duration_minutes} minutes · {test.question_count} questions · auto-submit on timeout</p>
             </CardContent>

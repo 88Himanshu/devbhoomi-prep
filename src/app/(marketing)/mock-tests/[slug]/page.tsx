@@ -153,9 +153,9 @@ export default async function MockTestDetailPage(props: PageProps<"/mock-tests/[
             <CardContent className="pt-5">
               {!user ? (
                 <>
-                  <p className="text-sm text-ink-700">Log in to attempt this test. New students get a 30-day free trial with premium tests included.</p>
+                  <p className="text-sm text-ink-700">Log in to attempt this test. New students get a 7-day free trial with premium tests included.</p>
                   <ButtonLink href={`/login?next=${encodeURIComponent(`/mock-tests/${test.slug}`)}`} className="mt-4 w-full"><Play className="h-4 w-4" aria-hidden="true" /> Log in to start</ButtonLink>
-                  <ButtonLink href="/signup" variant="outline" className="mt-2 w-full">Start 30 Days Free Trial</ButtonLink>
+                  <ButtonLink href="/signup" variant="outline" className="mt-2 w-full">Start 7-Day Free Trial</ButtonLink>
                 </>
               ) : !gate.ok ? (
                 <PremiumLock compact title="Premium mock test" description="Unlock unlimited mock tests, detailed solutions and analytics." className="border-0 bg-transparent px-0 py-0" />

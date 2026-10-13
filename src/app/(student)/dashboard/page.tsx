@@ -36,7 +36,7 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
       />
 
       {sp.welcome === "1" && (
-        <Alert tone="success" title="Your 30-day free trial has started 🎉">
+        <Alert tone="success" title="Your 7-day free trial has started 🎉">
           Explore notes, previous-year papers and mock tests. Your trial ends on {formatDate(access.trialEndsAt)}.
         </Alert>
       )}

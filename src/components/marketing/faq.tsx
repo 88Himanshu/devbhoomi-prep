@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 export interface FaqItem { q: string; a: string }
 
 export const FAQ_ITEMS: FaqItem[] = [
-  { q: "What is included in the 30-day free trial?", a: "Every new account gets 30 days of access to selected premium notes, previous-year papers and mock tests, plus the full student dashboard. No card is needed to start." },
+  { q: "What is included in the 7-day free trial?", a: "Every new account gets 7 days of access to selected premium notes, previous-year papers and mock tests, plus the full student dashboard. No card is needed to start." },
   { q: "What happens when my trial ends?", a: "Premium materials and premium mock tests are locked automatically. Free materials, free tests, your dashboard, bookmarks and past results remain available." },
   { q: "Which exams do you cover?", a: "UKPSC, UKSSSC, Uttarakhand Police, Patwari / Lekhpal, VDO, Junior Assistant, Forest Guard, Group C exams, teaching exams and UTET, with more added regularly." },
   { q: "Is the study material legal to use?", a: "Yes. We only publish original notes written by our editorial team, licensed content, public-domain material and PDFs we are authorised to distribute. We do not upload copyrighted commercial books." },

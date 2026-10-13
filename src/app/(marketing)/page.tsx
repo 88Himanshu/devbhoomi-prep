@@ -18,7 +18,7 @@ import { ExamCard } from "@/components/exams/exam-card";
 
 export const metadata = pageMetadata({
   title: "Uttarakhand Competitive Exam Preparation – Notes, Papers & Mock Tests",
-  description: "Prepare for UKPSC, UKSSSC, Uttarakhand Police, Patwari, VDO, Forest Guard and more with original study material, previous-year papers, timed mock tests and performance analytics. Start a 30-day free trial.",
+  description: "Prepare for UKPSC, UKSSSC, Uttarakhand Police, Patwari, VDO, Forest Guard and more with original study material, previous-year papers, timed mock tests and performance analytics. Start a 7-day free trial.",
   path: "/",
 });
 
@@ -69,7 +69,7 @@ export default async function HomePage() {
               {signedIn ? (
                 <ButtonLink href="/dashboard" size="lg">Go to Dashboard</ButtonLink>
               ) : (
-                <ButtonLink href="/signup" size="lg">Start 30 Days Free Trial</ButtonLink>
+                <ButtonLink href="/signup" size="lg">Start 7-Day Free Trial</ButtonLink>
               )}
               <ButtonLink href="/exams" variant="outline" size="lg">Explore Courses</ButtonLink>
             </div>
@@ -148,7 +148,7 @@ export default async function HomePage() {
       </Section>
 
       <Section id="pricing" tone="muted">
-        <SectionHeader eyebrow="Pricing" title="Simple, affordable plans" description="Start free for 30 days. Upgrade only if it helps you." href="/pricing" linkLabel="Compare plans" />
+        <SectionHeader eyebrow="Pricing" title="Simple, affordable plans" description="Try it free for 7 days, then pick a plan that fits." href="/pricing" linkLabel="Compare plans" />
         <PricingCards signedIn={signedIn} access={access} compact />
         <div className="mt-6"><SecurePaymentNote /></div>
       </Section>

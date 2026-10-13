@@ -14,7 +14,7 @@ export default async function LoginPage(props: PageProps<"/login">) {
     <AuthCard
       title="Welcome back"
       subtitle="Log in to continue your preparation."
-      footer={<>New here? <Link href="/signup" className="font-semibold text-brand-700 hover:underline">Start your 30-day free trial</Link></>}
+      footer={<>New here? <Link href="/signup" className="font-semibold text-brand-700 hover:underline">Start your 7-day free trial</Link></>}
     >
       <LoginForm next={next} />
       <DemoAccountsHint />

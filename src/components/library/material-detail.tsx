@@ -124,9 +124,9 @@ export async function MaterialDetail({ kind, slug }: { kind: "note"; slug: strin
               !user ? (
                 <div className="rounded-card border border-brand-200 bg-brand-50 px-6 py-10 text-center">
                   <p className="font-semibold text-ink-900">This is premium {"study material"}</p>
-                  <p className="mt-1 text-sm text-ink-700">Create a free account to start your 30-day trial and read it online instantly.</p>
+                  <p className="mt-1 text-sm text-ink-700">Create a free account to start your 7-day trial and read it online instantly.</p>
                   <div className="mt-4 flex justify-center gap-2">
-                    <ButtonLink href="/signup" size="sm">Start 30-day free trial</ButtonLink>
+                    <ButtonLink href="/signup" size="sm">Start 7-day free trial</ButtonLink>
                     <ButtonLink href={`/login?next=${encodeURIComponent(`${basePath}/${material.slug}`)}`} variant="outline" size="sm">Log in</ButtonLink>
                   </div>
                 </div>

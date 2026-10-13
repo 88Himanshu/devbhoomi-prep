@@ -47,7 +47,7 @@ function profile(user_id: string, startedDaysAgo: number, opts: Partial<Profile>
     preferred_exam_id: null,
     education_level: "Graduate",
     trial_started_at: daysAgo(startedDaysAgo),
-    trial_ends_at: daysAgo(startedDaysAgo - 30),
+    trial_ends_at: daysAgo(startedDaysAgo - 7),
     study_streak_days: 0,
     last_active_date: null,
     updated_at: SEED_NOW,
@@ -57,7 +57,7 @@ function profile(user_id: string, startedDaysAgo: number, opts: Partial<Profile>
 
 export const profiles: Profile[] = [
   profile("user_admin", 400, { trial_ends_at: daysAgo(370), preferred_exam_id: null, education_level: null }),
-  profile("user_student", 12, { trial_ends_at: daysFromNow(18), preferred_exam_id: "exam_uksssc", study_streak_days: 5, last_active_date: "2026-09-01" }),
+  profile("user_student", 3, { trial_ends_at: daysFromNow(4), preferred_exam_id: "exam_uksssc", study_streak_days: 5, last_active_date: "2026-09-01" }),
   profile("user_priya", 70, { trial_ends_at: daysAgo(40), preferred_exam_id: "exam_ukpsc", education_level: "Post Graduate", study_streak_days: 12, last_active_date: "2026-08-31" }),
   profile("user_blocked", 90, { trial_ends_at: daysAgo(60), preferred_exam_id: "exam_police" }),
   profile("user_bisht", 45, { trial_ends_at: daysAgo(15), preferred_exam_id: "exam_patwari", study_streak_days: 2, last_active_date: "2026-08-29" }),

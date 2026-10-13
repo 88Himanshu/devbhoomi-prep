@@ -9,8 +9,8 @@ import { Alert } from "@/components/ui/misc";
 import { formatDate } from "@/lib/utils";
 
 export const metadata = pageMetadata({
-  title: "Pricing – Free 30-day trial, then from ₹199/month",
-  description: "Start with a 30-day free trial. Premium plans from ₹199/month unlock the full notes library, all previous-year papers, unlimited mock tests, solutions and analytics.",
+  title: "Pricing – Plans from ₹199/month",
+  description: "Start with a 7-day free trial. Premium plans from ₹199/month unlock the full notes library, all previous-year papers, unlimited mock tests, solutions and analytics.",
   path: "/pricing",
 });
 
@@ -26,7 +26,7 @@ export default async function PricingPage() {
       <JsonLd data={[faqJsonLd(PRICING_FAQ), breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Pricing", path: "/pricing" }])]} />
       <div className="border-b border-ink-200 bg-gradient-to-b from-brand-50 to-white">
         <Container className="py-12 text-center sm:py-16">
-          <PageHeader eyebrow="Pricing" title="Simple plans for serious preparation" description="Every new account starts with 30 days free. Upgrade any time to unlock the complete library, all papers and unlimited mock tests." className="items-center text-center sm:flex-col sm:items-center [&>div]:mx-auto" />
+          <PageHeader eyebrow="Pricing" title="Simple plans for serious preparation" description="Every new account starts with a 7-day free trial. Choose a plan to unlock the complete library, all papers and unlimited mock tests." className="items-center text-center sm:flex-col sm:items-center [&>div]:mx-auto" />
         </Container>
       </div>
       <Container className="space-y-16 py-12 sm:py-16">
