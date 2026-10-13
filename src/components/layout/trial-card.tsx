@@ -34,7 +34,7 @@ export function TrialSidebarCard({ access, className }: { access: AccessState; c
     <div className={className}>
       <div className="rounded-2xl border border-ink-200 bg-white p-4">
         <p className="text-sm font-semibold text-ink-900">Trial ended</p>
-        <p className="mt-1 text-xs text-ink-500">Premium books, papers and mock tests are locked. Free content stays open.</p>
+        <p className="mt-1 text-xs text-ink-500">Premium notes, papers and mock tests are locked. Free content stays open.</p>
         <ButtonLink href="/pricing" size="sm" className="mt-3 w-full">Upgrade to Premium</ButtonLink>
       </div>
     </div>

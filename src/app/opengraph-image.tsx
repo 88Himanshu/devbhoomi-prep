@@ -24,7 +24,7 @@ export default function OpenGraphImage() {
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
           <span style={{ fontSize: 60, fontWeight: 700, lineHeight: 1.1, maxWidth: 980 }}>Prepare Smarter. Crack Uttarakhand Government Exams.</span>
-          <span style={{ fontSize: 26, color: "#d9e4f7" }}>Books · Notes · Previous Year Papers · Mock Tests · Analytics</span>
+          <span style={{ fontSize: 26, color: "#d9e4f7" }}>Notes · Previous Year Papers · Mock Tests · Analytics</span>
         </div>
         <div style={{ display: "flex", gap: 14 }}>
           {["UKPSC", "UKSSSC", "Police", "Patwari", "VDO", "Forest Guard", "UTET"].map((t) => (

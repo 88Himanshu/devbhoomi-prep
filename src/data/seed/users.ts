@@ -254,8 +254,6 @@ export const answers: TestAnswer[] = ["att_0012", "att_0013", "att_0014"]
   .flatMap(buildAnswers);
 
 export const bookmarks: Bookmark[] = [
-  { id: "bm_0001", user_id: "user_student", item_type: "book", item_id: "book_001", created_at: daysAgo(10) },
-  { id: "bm_0002", user_id: "user_student", item_type: "book", item_id: "book_004", created_at: daysAgo(9) },
   { id: "bm_0003", user_id: "user_student", item_type: "note", item_id: "note_001", created_at: daysAgo(7) },
   { id: "bm_0004", user_id: "user_student", item_type: "question", item_id: "q_0003", created_at: daysAgo(5) },
   { id: "bm_0005", user_id: "user_student", item_type: "question", item_id: "q_0120", created_at: daysAgo(3) },
@@ -263,9 +261,6 @@ export const bookmarks: Bookmark[] = [
 ];
 
 export const progress: StudyProgress[] = [
-  { id: "prog_0001", user_id: "user_student", item_type: "book", item_id: "book_001", progress_percent: 42, last_position: 134, seconds_spent: 14_400, updated_at: daysAgo(1) },
-  { id: "prog_0002", user_id: "user_student", item_type: "book", item_id: "book_004", progress_percent: 68, last_position: 143, seconds_spent: 9_800, updated_at: daysAgo(2) },
   { id: "prog_0003", user_id: "user_student", item_type: "note", item_id: "note_001", progress_percent: 100, last_position: 48, seconds_spent: 3_600, updated_at: daysAgo(4) },
   { id: "prog_0004", user_id: "user_student", item_type: "note", item_id: "note_009", progress_percent: 25, last_position: 11, seconds_spent: 1_500, updated_at: daysAgo(3) },
-  { id: "prog_0005", user_id: "user_student", item_type: "book", item_id: "book_006", progress_percent: 12, last_position: 43, seconds_spent: 2_700, updated_at: daysAgo(6) },
 ];

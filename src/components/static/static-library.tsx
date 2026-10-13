@@ -13,7 +13,7 @@ import { Pagination } from "@/components/library/pagination";
 
 const PAGE_SIZE = 12;
 
-interface Props { kind: "book" | "note"; materials: Material[]; subjects: Subject[]; exams: Exam[]; years: number[] }
+interface Props { kind: "note"; materials: Material[]; subjects: Subject[]; exams: Exam[]; years: number[] }
 
 /** Client-side filtered library for the static showcase (all data is embedded at build time). */
 export function StaticLibrary(props: Props) {
@@ -24,13 +24,13 @@ export function StaticLibrary(props: Props) {
   );
 }
 
-function Inner({ kind, materials, subjects, exams, years }: Props) {
+function Inner({ materials, subjects, exams, years }: Props) {
   const sp = useSearchParams();
   const get = (k: string) => sp.get(k) || undefined;
   const q = get("q"), exam = get("exam"), subject = get("subject"), language = get("language"), year = get("year"), sort = get("sort"), access = get("access");
   const page = Math.max(1, Number(get("page")) || 1);
-  const basePath = kind === "book" ? "/books" : "/notes";
-  const label = kind === "book" ? "Books" : "Notes";
+  const basePath = "/notes";
+  const label = "Notes";
 
   const all = useMemo(() => {
     const term = q?.toLowerCase();

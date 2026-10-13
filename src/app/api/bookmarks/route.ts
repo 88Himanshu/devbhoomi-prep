@@ -3,7 +3,7 @@ import { apiUser } from "@/lib/auth/session";
 import { listBookmarks, toggleBookmark } from "@/lib/services/bookmarks";
 
 const bodySchema = z.object({
-  type: z.enum(["book", "note", "question", "mock_test"]),
+  type: z.enum(["note", "question", "mock_test"]),
   item_id: z.string().min(1).max(120),
 });
 

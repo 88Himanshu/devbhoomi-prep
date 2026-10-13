@@ -13,7 +13,7 @@ export interface SubjectStat {
 }
 
 export interface ContinueItem {
-  kind: "book" | "note";
+  kind: "note";
   material: Material;
   progress: StudyProgress;
 }
@@ -29,7 +29,7 @@ export interface DashboardData {
   continueLearning: ContinueItem[];
   recommendedTests: MockTest[];
   recentTests: TestAttempt[];
-  savedMaterials: { kind: "book" | "note"; material: Material }[];
+  savedMaterials: { kind: "note"; material: Material }[];
   bookmarkedQuestionCount: number;
   bookmarkedTestCount: number;
   subjectStats: SubjectStat[];
@@ -110,36 +110,30 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
   const strongSubjects = subjectStats.filter((s) => s.accuracy >= 75).slice(0, 4);
 
   // Continue learning (materials with progress)
-  const bookIds = progressRows.filter((p) => p.item_type === "book").map((p) => p.item_id);
   const noteIds = progressRows.filter((p) => p.item_type === "note").map((p) => p.item_id);
-  const savedBookIds = bookmarks.filter((b) => b.item_type === "book").map((b) => b.item_id);
   const savedNoteIds = bookmarks.filter((b) => b.item_type === "note").map((b) => b.item_id);
-  const [books, notes] = await Promise.all([
-    uniq([...bookIds, ...savedBookIds]).length ? store.select("books", { in: { id: uniq([...bookIds, ...savedBookIds]) } }) : Promise.resolve([] as Material[]),
-    uniq([...noteIds, ...savedNoteIds]).length ? store.select("notes", { in: { id: uniq([...noteIds, ...savedNoteIds]) } }) : Promise.resolve([] as Material[]),
-  ]);
-  const bookMap = new Map(books.map((b) => [b.id, b]));
+  const notes = uniq([...noteIds, ...savedNoteIds]).length ? await store.select("notes", { in: { id: uniq([...noteIds, ...savedNoteIds]) } }) : ([] as Material[]);
   const noteMap = new Map(notes.map((n) => [n.id, n]));
   const continueLearning: ContinueItem[] = progressRows
-    .filter((p) => p.item_type !== "exam" && p.progress_percent < 100)
+    .filter((p) => p.item_type === "note" && p.progress_percent < 100)
     .map((p) => {
-      const material = p.item_type === "book" ? bookMap.get(p.item_id) : noteMap.get(p.item_id);
-      return material ? { kind: p.item_type as "book" | "note", material, progress: p } : null;
+      const material = noteMap.get(p.item_id);
+      return material ? { kind: "note" as const, material, progress: p } : null;
     })
     .filter((x): x is ContinueItem => Boolean(x))
     .slice(0, 4);
-  const materialProgress = progressRows.filter((p) => p.item_type !== "exam");
+  const materialProgress = progressRows.filter((p) => p.item_type === "note");
   const studyProgress = materialProgress.length
     ? Math.round(materialProgress.reduce((s, p) => s + p.progress_percent, 0) / materialProgress.length)
     : 0;
 
   const savedMaterials = bookmarks
-    .filter((b) => b.item_type === "book" || b.item_type === "note")
+    .filter((b) => b.item_type === "note")
     .map((b) => {
-      const material = b.item_type === "book" ? bookMap.get(b.item_id) : noteMap.get(b.item_id);
-      return material ? { kind: b.item_type as "book" | "note", material } : null;
+      const material = noteMap.get(b.item_id);
+      return material ? { kind: "note" as const, material } : null;
     })
-    .filter((x): x is { kind: "book" | "note"; material: Material } => Boolean(x))
+    .filter((x): x is { kind: "note"; material: Material } => Boolean(x))
     .slice(0, 5);
 
   // Recommended tests: preferred exam, not yet attempted; fall back to popular

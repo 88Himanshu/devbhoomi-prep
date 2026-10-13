@@ -10,8 +10,8 @@ import { ButtonLink } from "@/components/ui/button";
 import { ConfirmButton, SubmitButton } from "@/components/admin/confirm-button";
 import { FilterBar, FilterInput, FilterSelect, Pagination } from "@/components/admin/shared";
 
-export async function MaterialList({ kind, sp }: { kind: "book" | "note"; sp: Record<string, string | string[] | undefined> }) {
-  const table = kind === "book" ? "books" : "notes";
+export async function MaterialList({ kind, sp }: { kind: "note"; sp: Record<string, string | string[] | undefined> }) {
+  const table = "notes";
   const base = `/admin/${table}`;
   const store = await adminDb();
   const [subjects, exams] = await Promise.all([store.select("subjects", { order: [{ column: "sort_order" }] }), store.select("exams", { order: [{ column: "sort_order" }] })]);
@@ -32,7 +32,7 @@ export async function MaterialList({ kind, sp }: { kind: "book" | "note"; sp: Re
   const pageRows = rows.slice(offset, offset + pageSize);
   const sname = (id: string) => subjects.find((s) => s.id === id)?.name ?? id;
   const ename = (id: string) => exams.find((e) => e.id === id)?.short_name ?? id;
-  const title = kind === "book" ? "Books" : "Notes";
+  const title = "Notes";
 
   return (
     <div>

@@ -6,7 +6,7 @@ import { ExamCard } from "@/components/exams/exam-card";
 
 export const metadata = pageMetadata({
   title: "Uttarakhand Government Exams – UKPSC, UKSSSC, Police, Patwari & more",
-  description: "Browse every Uttarakhand competitive exam we cover: overview, eligibility, syllabus, exam pattern, books, notes, previous-year papers and mock tests.",
+  description: "Browse every Uttarakhand competitive exam we cover: overview, eligibility, syllabus, exam pattern, notes, previous-year papers and mock tests.",
   path: "/exams",
 });
 
@@ -25,7 +25,7 @@ export default async function ExamsPage() {
       <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Exams", path: "/exams" }])} />
       <div className="border-b border-ink-200 bg-gradient-to-b from-brand-50 to-white">
         <Container className="py-12 sm:py-16">
-          <PageHeader eyebrow="Exam categories" title="Uttarakhand competitive exams" description="Pick an exam to see its eligibility, syllabus, pattern, study plan and all matching books, notes, papers and mock tests." />
+          <PageHeader eyebrow="Exam categories" title="Uttarakhand competitive exams" description="Pick an exam to see its eligibility, syllabus, pattern, study plan and all matching notes, papers and mock tests." />
         </Container>
       </div>
       <Container className="space-y-12 py-12">

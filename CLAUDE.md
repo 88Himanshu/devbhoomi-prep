@@ -24,7 +24,7 @@ Uttarakhand competitive-exam preparation platform. Next.js 16 (App Router, Turbo
 - `src/components/charts` — Recharts wrappers (use these; don't hand-roll chart colours).
 
 ## Routes
-- `(marketing)` public pages with header/footer: `/`, `/exams`, `/exams/[slug]`, `/books`, `/notes`, `/previous-year-papers`, `/mock-tests`, `/pricing`, `/search`, legal pages.
+- `(marketing)` public pages with header/footer: `/`, `/exams`, `/exams/[slug]`, `/notes`, `/previous-year-papers`, `/mock-tests`, `/pricing`, `/search`, legal pages.
 - `(auth)` centered card: `/login`, `/signup`, `/forgot-password`, `/reset-password`, `/verify-email`.
 - `(student)` requires login, sidebar shell: `/dashboard`, `/analytics`, `/bookmarks`, `/profile`, `/tests/*`.
 - `/admin/*` requires admin role. `/api/*` route handlers return JSON; use `apiUser()/apiAdmin()/apiRequirePremium()`.

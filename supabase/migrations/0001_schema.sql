@@ -90,10 +90,10 @@ create table if not exists public.exams (
   created_at              timestamptz not null default now()
 );
 
--- books and notes share one shape (see Material in src/lib/types.ts)
-create table if not exists public.books (
+-- notes (see Material in src/lib/types.ts)
+create table if not exists public.notes (
   id              text primary key default gen_random_uuid()::text,
-  kind            text not null default 'book' check (kind = 'book'),
+  kind            text not null default 'note' check (kind = 'note'),
   slug            text not null unique,
   title           text not null,
   description     text not null default '',
@@ -114,12 +114,6 @@ create table if not exists public.books (
   views           int not null default 0,
   created_at      timestamptz not null default now()
 );
-
-create table if not exists public.notes (like public.books including all);
-alter table public.notes alter column kind set default 'note';
-alter table public.notes drop constraint if exists books_kind_check;
-alter table public.notes add constraint notes_kind_check check (kind = 'note');
-alter table public.notes add constraint notes_subject_fk foreign key (subject_id) references public.subjects(id);
 
 create table if not exists public.previous_year_papers (
   id                text primary key default gen_random_uuid()::text,
@@ -233,7 +227,7 @@ create table if not exists public.test_answers (
 create table if not exists public.bookmarks (
   id          text primary key default gen_random_uuid()::text,
   user_id     uuid not null references public.users(id) on delete cascade,
-  item_type   text not null check (item_type in ('book','note','question','mock_test')),
+  item_type   text not null check (item_type in ('note','question','mock_test')),
   item_id     text not null,
   created_at  timestamptz not null default now(),
   unique (user_id, item_type, item_id)
@@ -242,7 +236,7 @@ create table if not exists public.bookmarks (
 create table if not exists public.study_progress (
   id                text primary key default gen_random_uuid()::text,
   user_id           uuid not null references public.users(id) on delete cascade,
-  item_type         text not null check (item_type in ('book','note','exam')),
+  item_type         text not null check (item_type in ('note','exam')),
   item_id           text not null,
   progress_percent  int not null default 0 check (progress_percent between 0 and 100),
   last_position     int,
@@ -311,9 +305,6 @@ create table if not exists public.settings (
 -- ---------------------------------------------------------------------------
 -- Indexes
 -- ---------------------------------------------------------------------------
-create index if not exists idx_books_subject on public.books(subject_id);
-create index if not exists idx_books_exam_ids on public.books using gin(exam_ids);
-create index if not exists idx_books_search on public.books using gin(to_tsvector('simple', title || ' ' || description));
 create index if not exists idx_notes_subject on public.notes(subject_id);
 create index if not exists idx_notes_exam_ids on public.notes using gin(exam_ids);
 create index if not exists idx_papers_exam_year on public.previous_year_papers(exam_id, year desc);

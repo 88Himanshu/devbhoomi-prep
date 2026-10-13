@@ -28,11 +28,11 @@ const LICENSE_LABELS: Record<Material["source_license"], string> = {
   authorized: "Authorised for distribution",
 };
 
-export async function MaterialDetail({ kind, slug }: { kind: "book" | "note"; slug: string }) {
+export async function MaterialDetail({ kind, slug }: { kind: "note"; slug: string }) {
   const material = await getMaterialBySlug(kind, slug);
   if (!material || !material.is_published) notFound();
-  const basePath = kind === "book" ? "/books" : "/notes";
-  const label = kind === "book" ? "Books" : "Notes";
+  const basePath = "/notes";
+  const label = "Notes";
 
   const [user, access, subjectMap, examMap, related] = await Promise.all([
     getSessionUser(), getAccess(), getSubjectMap(), getExamMap(), getRelatedMaterials(material),
@@ -44,7 +44,7 @@ export async function MaterialDetail({ kind, slug }: { kind: "book" | "note"; sl
 
   const subject = subjectMap.get(material.subject_id);
   const exams = material.exam_ids.map((id) => examMap.get(id)).filter(Boolean) as NonNullable<ReturnType<typeof examMap.get>>[];
-  const hasAccessFeature = access.canAccess(featureFor(kind));
+  const hasAccessFeature = access.canAccess(featureFor());
   // Static showcase: free items are readable without an account (no server to log in to).
   const staticFree = isStaticSite() && !material.is_premium;
   const canRead = access.isAdmin || staticFree || (material.is_premium ? hasAccessFeature : Boolean(user));
@@ -54,7 +54,7 @@ export async function MaterialDetail({ kind, slug }: { kind: "book" | "note"; sl
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": kind === "book" ? "Book" : "CreativeWork",
+    "@type": "CreativeWork",
     name: material.title,
     description: material.description,
     author: { "@type": "Organization", name: material.author },
@@ -123,7 +123,7 @@ export async function MaterialDetail({ kind, slug }: { kind: "book" | "note"; sl
             {lockedPremium ? (
               !user ? (
                 <div className="rounded-card border border-brand-200 bg-brand-50 px-6 py-10 text-center">
-                  <p className="font-semibold text-ink-900">This is premium {kind === "book" ? "book" : "study material"}</p>
+                  <p className="font-semibold text-ink-900">This is premium {"study material"}</p>
                   <p className="mt-1 text-sm text-ink-700">Create a free account to start your 30-day trial and read it online instantly.</p>
                   <div className="mt-4 flex justify-center gap-2">
                     <ButtonLink href="/signup" size="sm">Start 30-day free trial</ButtonLink>
@@ -131,7 +131,7 @@ export async function MaterialDetail({ kind, slug }: { kind: "book" | "note"; sl
                   </div>
                 </div>
               ) : (
-                <PremiumLock title="Premium material" description={access.trialActive ? "Your trial plan does not include this feature. Upgrade to read and download." : "Your free trial has ended. Upgrade to keep reading premium books and notes."} />
+                <PremiumLock title="Premium material" description={access.trialActive ? "Your trial plan does not include this feature. Upgrade to read and download." : "Your free trial has ended. Upgrade to keep reading premium notes."} />
               )
             ) : !user && !staticFree ? (
               <Alert tone="info" title="Log in to read">This {kind} is free. <Link href={`/login?next=${encodeURIComponent(`${basePath}/${material.slug}`)}`} className="font-semibold underline">Log in</Link> or <Link href="/signup" className="font-semibold underline">sign up</Link> to read online and download.</Alert>
@@ -155,7 +155,7 @@ export async function MaterialDetail({ kind, slug }: { kind: "book" | "note"; sl
             <Card className="border-saffron-200 bg-saffron-50/60">
               <CardContent className="pt-5">
                 <p className="text-sm font-semibold text-ink-900">{access.trialActive ? `Trial · ${access.trialDaysLeft} days left` : "Unlock the full library"}</p>
-                <p className="mt-1 text-sm text-ink-700">Premium gives unlimited access to every book, note, paper and mock test.</p>
+                <p className="mt-1 text-sm text-ink-700">Premium gives unlimited access to every note, paper and mock test.</p>
                 <ButtonLink href="/pricing" variant="saffron" size="sm" className="mt-3 w-full">See plans from ₹199</ButtonLink>
               </CardContent>
             </Card>

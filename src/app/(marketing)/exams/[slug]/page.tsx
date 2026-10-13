@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/exams/[slug]">): 
   const exam = await getExamBySlug(slug);
   if (!exam) return { title: "Exam not found" };
   return pageMetadata({
-    title: `${exam.name} – Syllabus, Eligibility, Pattern, Books & Mock Tests`,
+    title: `${exam.name} – Syllabus, Eligibility, Pattern, Notes & Mock Tests`,
     description: `${exam.tagline} Complete ${exam.short_name} preparation: eligibility, syllabus, exam pattern, study plan, notes, previous-year papers and mock tests.`,
     path: `/exams/${exam.slug}`,
   });
@@ -38,7 +38,6 @@ const SECTIONS = [
   { id: "eligibility", label: "Eligibility" },
   { id: "syllabus", label: "Syllabus" },
   { id: "pattern", label: "Exam Pattern" },
-  { id: "books", label: "Books" },
   { id: "notes", label: "Notes" },
   { id: "papers", label: "Previous Papers" },
   { id: "mock-tests", label: "Mock Tests" },
@@ -51,9 +50,8 @@ export default async function ExamPage({ params }: PageProps<"/exams/[slug]">) {
   const exam = await getExamBySlug(slug);
   if (!exam || !exam.is_active) notFound();
 
-  const [user, access, subjectMap, examMap, books, notes, papers, tests, store] = await Promise.all([
+  const [user, access, subjectMap, examMap, notes, papers, tests, store] = await Promise.all([
     getSessionUser(), getAccess(), getSubjectMap(), getExamMap(),
-    listMaterials("book", { examId: exam.id, limit: 6 }),
     listMaterials("note", { examId: exam.id, limit: 6 }),
     listPapers({ examId: exam.id, limit: 6 }),
     listMockTests({ examId: exam.id, limit: 6 }),
@@ -164,14 +162,6 @@ export default async function ExamPage({ params }: PageProps<"/exams/[slug]">) {
               </div>
             </Block>
 
-            <Block id="books" title="Books" href={`/books?exam=${exam.id}`}>
-              {books.length ? (
-                <div className="grid gap-4 md:grid-cols-2">
-                  {books.map((m) => <MaterialCard key={m.id} item={m} subject={subjectMap.get(m.subject_id)} locked={m.is_premium && !access.canAccess("books")} />)}
-                </div>
-              ) : <EmptyState title="Books coming soon" description="We are preparing books for this exam." />}
-            </Block>
-
             <Block id="notes" title="Notes" href={`/notes?exam=${exam.id}`}>
               {notes.length ? (
                 <div className="grid gap-4 md:grid-cols-2">
@@ -234,14 +224,14 @@ export default async function ExamPage({ params }: PageProps<"/exams/[slug]">) {
               <dl className="mt-3 space-y-2 text-sm">
                 <Row k="Conducting body" v={exam.conducting_body} />
                 <Row k="Category" v={exam.category} />
-                <Row k="Books & notes" v={`${books.length}${books.length === 6 ? "+" : ""} / ${notes.length}${notes.length === 6 ? "+" : ""}`} />
+                <Row k="Notes" v={`${notes.length}${notes.length === 6 ? "+" : ""}`} />
                 <Row k="Papers" v={String(papers.length)} />
                 <Row k="Mock tests" v={String(tests.length)} />
               </dl>
             </div>
             <div className="rounded-2xl bg-brand-900 p-5 text-white">
               <p className="text-sm font-semibold">{user ? "Ready to practise?" : "Start your 30-day free trial"}</p>
-              <p className="mt-1 text-xs text-brand-100">{user ? "Attempt a timed mock and see subject-wise analysis." : "Books, notes, papers and mock tests for this exam — free for 30 days."}</p>
+              <p className="mt-1 text-xs text-brand-100">{user ? "Attempt a timed mock and see subject-wise analysis." : "Notes, papers and mock tests for this exam — free for 30 days."}</p>
               {user ? (
                 freeMock ? <ButtonLink href={`/mock-tests/${freeMock.slug}`} variant="saffron" size="sm" className="mt-4 w-full">Attempt a mock</ButtonLink> : <ButtonLink href="/mock-tests" variant="saffron" size="sm" className="mt-4 w-full">Browse mock tests</ButtonLink>
               ) : (

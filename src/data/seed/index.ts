@@ -5,7 +5,7 @@ import type {
 } from "@/lib/types";
 import { subjects } from "./subjects";
 import { exams } from "./exams";
-import { books, notes } from "./materials";
+import { notes } from "./materials";
 import { questions } from "./questions";
 import { mockTests, mockTestQuestions } from "./mockTests";
 import { papers } from "./papers";
@@ -20,7 +20,6 @@ export interface SeedData {
   profiles: Profile[];
   exams: Exam[];
   subjects: Subject[];
-  books: Material[];
   notes: Material[];
   previous_year_papers: PreviousYearPaper[];
   questions: Question[];
@@ -38,7 +37,7 @@ export interface SeedData {
 
 export function getSeedData(): SeedData {
   return {
-    users, profiles, exams, subjects, books, notes,
+    users, profiles, exams, subjects, notes,
     previous_year_papers: papers, questions,
     mock_tests: mockTests, mock_test_questions: mockTestQuestions,
     test_attempts: attempts, test_answers: answers, bookmarks,

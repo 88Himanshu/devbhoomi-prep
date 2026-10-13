@@ -41,7 +41,7 @@ export default async function CheckoutSuccessPage(props: PageProps<"/checkout/su
             <ButtonLink href="/dashboard">Go to dashboard</ButtonLink>
             <ButtonLink href={`/profile/receipt/${payment.id}`} variant="outline"><Receipt className="h-4 w-4" aria-hidden="true" /> View receipt</ButtonLink>
           </div>
-          <p className="text-xs text-ink-500">All premium books, notes, previous-year papers and mock tests are unlocked. A receipt is available anytime from your profile.</p>
+          <p className="text-xs text-ink-500">All premium notes, previous-year papers and mock tests are unlocked. A receipt is available anytime from your profile.</p>
         </CardContent>
       </Card>
     </Container>

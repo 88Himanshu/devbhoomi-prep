@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/form";
  * body limit) and stores the returned storage key in a hidden input `name`.
  */
 export function FileField({ name, label, folder, accept = "application/pdf", initialKey, hint }: {
-  name: string; label: string; folder: "books" | "notes" | "papers" | "misc"; accept?: string; initialKey?: string | null; hint?: string;
+  name: string; label: string; folder: "notes" | "papers" | "misc"; accept?: string; initialKey?: string | null; hint?: string;
 }) {
   const [key, setKey] = useState<string>(initialKey ?? "");
   const [busy, setBusy] = useState(false);

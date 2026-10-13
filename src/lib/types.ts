@@ -14,8 +14,8 @@ export type SubscriptionStatus = "active" | "expired" | "cancelled";
 export type SubscriptionSource = "razorpay" | "manual";
 export type PaymentStatus = "created" | "paid" | "failed" | "refunded";
 export type AttemptStatus = "in_progress" | "submitted";
-export type BookmarkType = "book" | "note" | "question" | "mock_test";
-export type ProgressItemType = "book" | "note" | "exam";
+export type BookmarkType = "note" | "question" | "mock_test";
+export type ProgressItemType = "note" | "exam";
 export type SourceLicense = "original" | "licensed" | "public_domain" | "authorized";
 export type AnnouncementType = "banner" | "announcement";
 
@@ -99,10 +99,10 @@ export interface Subject {
   sort_order: number;
 }
 
-/** Shared shape for both `books` and `notes` tables. */
+/** Shape of the `notes` table. */
 export interface Material {
   id: string;
-  kind: "book" | "note";
+  kind: "note";
   slug: string;
   title: string;
   description: string;
@@ -316,7 +316,6 @@ export type SettingsValue =
 export interface TrialSettings {
   trial_days: number;
   /** Which premium features the free trial unlocks. */
-  books: boolean;
   notes: boolean;
   papers: boolean;
   mock_tests: boolean;
@@ -345,7 +344,6 @@ export interface Tables {
   profiles: Profile;
   exams: Exam;
   subjects: Subject;
-  books: Material;
   notes: Material;
   previous_year_papers: PreviousYearPaper;
   questions: Question;
@@ -375,7 +373,6 @@ export const PRIMARY_KEYS: { [K in TableName]?: keyof Tables[K] } = {
 /* -------------------------------------------------------------------------- */
 
 export type PremiumFeature =
-  | "books"
   | "notes"
   | "papers"
   | "mock_tests"

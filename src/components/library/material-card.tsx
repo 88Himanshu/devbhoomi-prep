@@ -25,7 +25,7 @@ export function MaterialCard({
   showBookmark?: boolean;
   progress?: number | null;
 }) {
-  const href = `/${material.kind === "book" ? "books" : "notes"}/${material.slug}`;
+  const href = `/notes/${material.slug}`;
   return (
     <Card hover className="group relative flex h-full flex-col overflow-hidden">
       <Link href={href} className="flex flex-1 flex-col p-4 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100">

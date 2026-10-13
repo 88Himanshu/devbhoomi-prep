@@ -10,7 +10,6 @@ import { Search } from "lucide-react";
 
 export const PUBLIC_NAV = [
   { href: "/exams", label: "Exams" },
-  { href: "/books", label: "Books" },
   { href: "/notes", label: "Notes" },
   { href: "/previous-year-papers", label: "PYQ Papers" },
   { href: "/mock-tests", label: "Mock Tests" },

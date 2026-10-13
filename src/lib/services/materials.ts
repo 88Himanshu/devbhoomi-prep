@@ -2,12 +2,12 @@ import "server-only";
 import { adminDb, db } from "@/lib/data";
 import type { Material, PreviousYearPaper } from "@/lib/types";
 
-export type MaterialKind = "book" | "note";
-export const tableFor = (kind: MaterialKind): "books" | "notes" => (kind === "book" ? "books" : "notes");
-export const featureFor = (kind: MaterialKind): "books" | "notes" => (kind === "book" ? "books" : "notes");
+export type MaterialKind = "note";
+export const tableFor = (): "notes" => "notes";
+export const featureFor = (): "notes" => "notes";
 
 export async function getRelatedMaterials(material: Material, limit = 4): Promise<Material[]> {
-  const rows = await (await db()).select(tableFor(material.kind), {
+  const rows = await (await db()).select(tableFor(), {
     eq: { is_published: true, subject_id: material.subject_id },
     order: [{ column: "views", ascending: false }],
     limit: limit + 1,
@@ -17,7 +17,7 @@ export async function getRelatedMaterials(material: Material, limit = 4): Promis
 
 export async function incrementViews(material: Material): Promise<void> {
   try {
-    await (await adminDb()).update(tableFor(material.kind), material.id, { views: material.views + 1 });
+    await (await adminDb()).update(tableFor(), material.id, { views: material.views + 1 });
   } catch {
     // non-critical
   }
@@ -25,12 +25,12 @@ export async function incrementViews(material: Material): Promise<void> {
 
 export async function getMaterialsByIds(kind: MaterialKind, ids: string[]): Promise<Material[]> {
   if (!ids.length) return [];
-  return (await db()).select(tableFor(kind), { in: { id: ids } });
+  return (await db()).select(tableFor(), { in: { id: ids } });
 }
 
 /** Distinct years present in the published catalogue (for filter dropdowns). */
-export async function materialYears(kind: MaterialKind): Promise<number[]> {
-  const rows = await (await db()).select(tableFor(kind), { eq: { is_published: true } });
+export async function materialYears(): Promise<number[]> {
+  const rows = await (await db()).select(tableFor(), { eq: { is_published: true } });
   return [...new Set(rows.map((r) => r.year))].sort((a, b) => b - a);
 }
 
@@ -44,13 +44,13 @@ export async function paperYears(): Promise<number[]> {
  * Returns the record, its kind, and whether the key is the preview (always public).
  */
 export async function findOwnerOfKey(key: string): Promise<
-  | { kind: "book" | "note"; record: Material; isPreview: boolean }
+  | { kind: "note"; record: Material; isPreview: boolean }
   | { kind: "paper"; record: PreviousYearPaper; isPreview: false }
   | null
 > {
   const store = await adminDb();
-  for (const kind of ["book", "note"] as const) {
-    const table = tableFor(kind);
+  for (const kind of ["note"] as const) {
+    const table = tableFor();
     const byFile = await store.selectOne(table, { eq: { file_path: key } });
     if (byFile) return { kind, record: byFile, isPreview: false };
     const byPreview = await store.selectOne(table, { eq: { preview_path: key } });
@@ -67,7 +67,7 @@ export async function incrementDownloads(owner: NonNullable<Awaited<ReturnType<t
     if (owner.kind === "paper") {
       await store.update("previous_year_papers", owner.record.id, { downloads: owner.record.downloads + 1 });
     } else {
-      await store.update(tableFor(owner.kind), owner.record.id, { downloads: owner.record.downloads + 1 });
+      await store.update(tableFor(), owner.record.id, { downloads: owner.record.downloads + 1 });
     }
   } catch {
     // non-critical

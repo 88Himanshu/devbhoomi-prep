@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Bookmark, BookOpen, ClipboardList, FileQuestion, NotebookPen } from "lucide-react";
+import { Bookmark, ClipboardList, FileQuestion, NotebookPen } from "lucide-react";
 import { requireUser } from "@/lib/auth/session";
 import { getAccess } from "@/lib/access";
 import { db } from "@/lib/data";
@@ -20,7 +20,6 @@ import { BookmarkButton } from "@/components/bookmarks/bookmark-button";
 export const metadata: Metadata = { title: "My Bookmarks", robots: { index: false } };
 
 const TABS = [
-  { key: "book", label: "Books", icon: BookOpen },
   { key: "note", label: "Notes", icon: NotebookPen },
   { key: "question", label: "Questions", icon: FileQuestion },
   { key: "mock_test", label: "Mock Tests", icon: ClipboardList },
@@ -31,7 +30,7 @@ export default async function Page(props: PageProps<"/bookmarks">) {
   const user = await requireUser("/bookmarks");
   const sp = await props.searchParams;
   const tabRaw = Array.isArray(sp.tab) ? sp.tab[0] : sp.tab;
-  const tab: TabKey = TABS.some((t) => t.key === tabRaw) ? (tabRaw as TabKey) : "book";
+  const tab: TabKey = TABS.some((t) => t.key === tabRaw) ? (tabRaw as TabKey) : "note";
 
   const [all, access, examMap, subjectMap] = await Promise.all([listBookmarks(user.id), getAccess(), getExamMap(), getSubjectMap()]);
   const counts = Object.fromEntries(TABS.map((t) => [t.key, all.filter((b) => b.item_type === t.key).length])) as Record<TabKey, number>;
@@ -40,19 +39,19 @@ export default async function Page(props: PageProps<"/bookmarks">) {
 
   let materials: Material[] = [], questions: Question[] = [], tests: MockTest[] = [];
   if (ids.length) {
-    if (tab === "book" || tab === "note") materials = await store.select(tab === "book" ? "books" : "notes", { in: { id: ids } });
+    if (tab === "note") materials = await store.select("notes", { in: { id: ids } });
     else if (tab === "question") questions = await store.select("questions", { in: { id: ids } });
     else tests = await store.select("mock_tests", { in: { id: ids } });
   }
   const order = new Map(ids.map((id, i) => [id, i]));
   const byOrder = <T extends { id: string }>(arr: T[]) => [...arr].sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
-  const progress = tab === "book" || tab === "note" ? await listProgress(user.id, tab) : [];
+  const progress = tab === "note" ? await listProgress(user.id, tab) : [];
   const progressMap = new Map(progress.map((p) => [p.item_id, p.progress_percent]));
   const canSeeAnswers = access.isAdmin || access.canAccess("solutions");
 
   return (
     <div>
-      <PageHeader eyebrow="Saved for later" title="My Bookmarks" description="Books, notes, questions and mock tests you have saved." />
+      <PageHeader eyebrow="Saved for later" title="My Bookmarks" description="Notes, questions and mock tests you have saved." />
       <div className="mt-6 flex gap-1 overflow-x-auto rounded-xl bg-ink-100 p-1 scrollbar-thin" role="tablist">
         {TABS.map((t) => (
           <Link key={t.key} href={`/bookmarks?tab=${t.key}`} role="tab" aria-selected={tab === t.key} className={cn("inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium", tab === t.key ? "bg-white text-brand-800 shadow-card" : "text-ink-500 hover:text-ink-900")}>
@@ -63,11 +62,11 @@ export default async function Page(props: PageProps<"/bookmarks">) {
 
       <div className="mt-6">
         {ids.length === 0 ? (
-          <EmptyState icon={Bookmark} title={`No saved ${TABS.find((t) => t.key === tab)!.label.toLowerCase()} yet`} description="Tap the bookmark icon on any item to save it here." action={<ButtonLink href={tab === "book" ? "/books" : tab === "note" ? "/notes" : tab === "question" ? "/search?q=Uttarakhand&type=questions" : "/mock-tests"} variant="outline" size="sm">Browse {TABS.find((t) => t.key === tab)!.label}</ButtonLink>} />
-        ) : tab === "book" || tab === "note" ? (
+          <EmptyState icon={Bookmark} title={`No saved ${TABS.find((t) => t.key === tab)!.label.toLowerCase()} yet`} description="Tap the bookmark icon on any item to save it here." action={<ButtonLink href={tab === "note" ? "/notes" : tab === "question" ? "/search?q=Uttarakhand&type=questions" : "/mock-tests"} variant="outline" size="sm">Browse {TABS.find((t) => t.key === tab)!.label}</ButtonLink>} />
+        ) : tab === "note" ? (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {byOrder(materials).map((m) => (
-              <MaterialCard key={m.id} material={m} subject={subjectMap.get(m.subject_id)} exams={m.exam_ids.map((id) => examMap.get(id)).filter(Boolean) as NonNullable<ReturnType<typeof examMap.get>>[]} locked={m.is_premium && !access.canAccess(tab === "book" ? "books" : "notes")} bookmarked progress={progressMap.get(m.id) ?? null} />
+              <MaterialCard key={m.id} material={m} subject={subjectMap.get(m.subject_id)} exams={m.exam_ids.map((id) => examMap.get(id)).filter(Boolean) as NonNullable<ReturnType<typeof examMap.get>>[]} locked={m.is_premium && !access.canAccess("notes")} bookmarked progress={progressMap.get(m.id) ?? null} />
             ))}
           </div>
         ) : tab === "question" ? (

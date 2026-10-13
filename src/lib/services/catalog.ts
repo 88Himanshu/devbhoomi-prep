@@ -45,8 +45,8 @@ export interface MaterialFilters {
   offset?: number;
 }
 
-export async function listMaterials(kind: "book" | "note", f: MaterialFilters = {}): Promise<Material[]> {
-  const table = kind === "book" ? "books" : "notes";
+export async function listMaterials(_kind: "note", f: MaterialFilters = {}): Promise<Material[]> {
+  const table = "notes";
   const eq: Partial<Material> = { is_published: true };
   if (f.subjectId) eq.subject_id = f.subjectId;
   if (f.language) eq.language = f.language as Material["language"];
@@ -63,8 +63,8 @@ export async function listMaterials(kind: "book" | "note", f: MaterialFilters = 
   });
 }
 
-export const getMaterialBySlug = cache(async (kind: "book" | "note", slug: string): Promise<Material | null> =>
-  (await db()).selectOne(kind === "book" ? "books" : "notes", { eq: { slug } }),
+export const getMaterialBySlug = cache(async (_kind: "note", slug: string): Promise<Material | null> =>
+  (await db()).selectOne("notes", { eq: { slug } }),
 );
 
 export interface PaperFilters {
@@ -129,12 +129,11 @@ export async function getActiveAnnouncements(type?: "banner" | "announcement") {
 /** Platform-wide counters for the landing page trust strip. */
 export const getPlatformStats = cache(async () => {
   const store = await db();
-  const [books, notes, tests, papers, questions] = await Promise.all([
-    store.count("books", { eq: { is_published: true } }),
+  const [notes, tests, papers, questions] = await Promise.all([
     store.count("notes", { eq: { is_published: true } }),
     store.count("mock_tests", { eq: { is_published: true } }),
     store.count("previous_year_papers", { eq: { is_published: true } }),
     store.count("questions", { eq: { is_active: true } }),
   ]);
-  return { materials: books + notes, tests, papers, questions };
+  return { materials: notes, tests, papers, questions };
 });

@@ -37,7 +37,7 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
 
       {sp.welcome === "1" && (
         <Alert tone="success" title="Your 30-day free trial has started 🎉">
-          Explore books, notes, previous-year papers and mock tests. Your trial ends on {formatDate(access.trialEndsAt)}.
+          Explore notes, previous-year papers and mock tests. Your trial ends on {formatDate(access.trialEndsAt)}.
         </Alert>
       )}
       {sp.reset === "1" && <Alert tone="success">Your password has been updated.</Alert>}
@@ -50,7 +50,7 @@ export default async function DashboardPage(props: PageProps<"/dashboard">) {
         <div className="flex flex-col gap-3 rounded-card border border-saffron-200 bg-saffron-50 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="font-semibold text-ink-900">Your trial has ended — premium content is locked</p>
-            <p className="mt-0.5 text-sm text-ink-700">Free books, papers and tests stay open. Upgrade from ₹199/month for full access.</p>
+            <p className="mt-0.5 text-sm text-ink-700">Free notes, papers and tests stay open. Upgrade from ₹199/month for full access.</p>
           </div>
           <ButtonLink href="/pricing" variant="saffron">Upgrade to Premium</ButtonLink>
         </div>

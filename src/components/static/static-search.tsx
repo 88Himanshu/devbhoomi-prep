@@ -3,7 +3,7 @@
 import { Suspense, useMemo } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { BookOpen, ClipboardList, FileQuestion, FileText, Landmark, Lock, NotebookPen, SearchX } from "lucide-react";
+import { ClipboardList, FileQuestion, FileText, Landmark, Lock, NotebookPen, SearchX } from "lucide-react";
 import { Badge, FreeBadge, PremiumBadge, difficultyTone } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/misc";
@@ -13,7 +13,6 @@ import { cn, DIFFICULTY_LABELS, LANGUAGE_LABELS, PAPER_TYPE_LABELS } from "@/lib
 /* Compact, answer-free datasets embedded at build time. */
 export interface SearchData {
   exams: { id: string; slug: string; name: string; short_name: string; conducting_body: string; category: string; tagline: string }[];
-  books: SearchMaterial[];
   notes: SearchMaterial[];
   papers: { id: string; title: string; exam_id: string; year: number; paper_type: string; total_questions: number; is_premium: boolean }[];
   mockTests: { id: string; slug: string; title: string; description: string; exam_id: string; question_count: number; duration_minutes: number; difficulty: string; is_premium: boolean }[];
@@ -23,11 +22,10 @@ export interface SearchData {
 }
 export interface SearchMaterial { id: string; slug: string; title: string; description: string; author: string; subject_id: string; language: string; pages: number; is_premium: boolean; cover_color: string }
 
-type GroupKey = "exams" | "books" | "notes" | "papers" | "mockTests" | "questions";
+type GroupKey = "exams" | "notes" | "papers" | "mockTests" | "questions";
 const TYPES: { key: "all" | GroupKey; label: string; icon: typeof Landmark }[] = [
   { key: "all", label: "All", icon: Landmark },
   { key: "exams", label: "Exams", icon: Landmark },
-  { key: "books", label: "Books", icon: BookOpen },
   { key: "notes", label: "Notes", icon: NotebookPen },
   { key: "papers", label: "Papers", icon: FileText },
   { key: "mockTests", label: "Mock Tests", icon: ClipboardList },
@@ -58,7 +56,6 @@ function Inner({ data }: { data: SearchData }) {
     const want = (k: GroupKey) => type === "all" || type === k;
     return {
       exams: want("exams") ? data.exams.filter((e) => hit(term, e.name, e.short_name, e.tagline, e.conducting_body)).slice(0, limit) : [],
-      books: want("books") ? data.books.filter((m) => hit(term, m.title, m.description, m.author)).slice(0, limit) : [],
       notes: want("notes") ? data.notes.filter((m) => hit(term, m.title, m.description, m.author)).slice(0, limit) : [],
       papers: want("papers") ? data.papers.filter((p) => hit(term, p.title)).slice(0, limit) : [],
       mockTests: want("mockTests") ? data.mockTests.filter((m) => hit(term, m.title, m.description)).slice(0, limit) : [],
@@ -97,8 +94,8 @@ function Inner({ data }: { data: SearchData }) {
               </div>
             </Group>
           )}
-          {(["books", "notes"] as const).map((k) => results[k].length > 0 && (
-            <Group key={k} title={k === "books" ? "Books" : "Notes"} more={type === "all" && results[k].length >= 6 ? href(k) : undefined}>
+          {(["notes"] as const).map((k) => results[k].length > 0 && (
+            <Group key={k} title="Notes" more={type === "all" && results[k].length >= 6 ? href(k) : undefined}>
               <div className="grid gap-3 sm:grid-cols-2">
                 {results[k].map((m) => (
                   <Link key={m.id} href={`/${k}/${m.slug}`} className="block">

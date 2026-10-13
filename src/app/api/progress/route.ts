@@ -3,7 +3,7 @@ import { apiUser } from "@/lib/auth/session";
 import { saveProgress } from "@/lib/services/progress";
 
 const schema = z.object({
-  item_type: z.enum(["book", "note", "exam"]),
+  item_type: z.enum(["note", "exam"]),
   item_id: z.string().min(1).max(120),
   progress_percent: z.number().min(0).max(100),
   last_position: z.number().int().min(0).nullable().optional(),

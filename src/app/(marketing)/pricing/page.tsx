@@ -10,7 +10,7 @@ import { formatDate } from "@/lib/utils";
 
 export const metadata = pageMetadata({
   title: "Pricing – Free 30-day trial, then from ₹199/month",
-  description: "Start with a 30-day free trial. Premium plans from ₹199/month unlock the full books & notes library, all previous-year papers, unlimited mock tests, solutions and analytics.",
+  description: "Start with a 30-day free trial. Premium plans from ₹199/month unlock the full notes library, all previous-year papers, unlimited mock tests, solutions and analytics.",
   path: "/pricing",
 });
 

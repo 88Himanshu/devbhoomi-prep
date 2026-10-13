@@ -8,7 +8,7 @@ import { LANGUAGE_LABELS, PAPER_TYPE_LABELS, formatNumber, DIFFICULTY_LABELS } f
 /** Lightweight catalogue cards used on the landing page and exam pages. */
 
 export function MaterialCard({ item, subject, locked }: { item: Material; subject?: Subject; locked: boolean }) {
-  const href = `/${item.kind === "book" ? "books" : "notes"}/${item.slug}`;
+  const href = `/notes/${item.slug}`;
   return (
     <Link href={href} className="group block h-full">
       <Card hover className="flex h-full gap-4 p-4">

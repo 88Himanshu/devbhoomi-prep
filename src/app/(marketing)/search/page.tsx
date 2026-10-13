@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookOpen, ClipboardList, FileQuestion, FileText, Landmark, NotebookPen, SearchX } from "lucide-react";
+import { ClipboardList, FileQuestion, FileText, Landmark, NotebookPen, SearchX } from "lucide-react";
 import { getSessionUser } from "@/lib/auth/session";
 import { getAccess } from "@/lib/access";
 import { getExamMap, getSubjectMap } from "@/lib/services/catalog";
@@ -17,7 +17,6 @@ export const metadata: Metadata = { title: "Search", robots: { index: false } };
 const TYPES: { key: "all" | SearchGroup; label: string; icon: typeof Landmark }[] = [
   { key: "all", label: "All", icon: Landmark },
   { key: "exams", label: "Exams", icon: Landmark },
-  { key: "books", label: "Books", icon: BookOpen },
   { key: "notes", label: "Notes", icon: NotebookPen },
   { key: "papers", label: "Papers", icon: FileText },
   { key: "mockTests", label: "Mock Tests", icon: ClipboardList },
@@ -38,7 +37,7 @@ export default async function Page(props: PageProps<"/search">) {
 
   return (
     <Container className="max-w-5xl py-8 sm:py-10">
-      <PageHeader eyebrow="Global search" title={q ? `Results for “${q}”` : "Search"} description="Find exams, books, notes, previous-year papers, mock tests and questions." />
+      <PageHeader eyebrow="Global search" title={q ? `Results for “${q}”` : "Search"} description="Find exams, notes, previous-year papers, mock tests and questions." />
       <div className="mt-6"><SearchBox size="lg" defaultValue={q} autoFocus={!q} /></div>
 
       {q.length >= 2 && (
@@ -71,8 +70,8 @@ export default async function Page(props: PageProps<"/search">) {
             </Group>
           )}
 
-          {(["books", "notes"] as const).map((k) => results[k].length > 0 && (
-            <Group key={k} title={k === "books" ? "Books" : "Notes"} more={type === "all" && results[k].length >= 6 ? href(k) : undefined}>
+          {(["notes"] as const).map((k) => results[k].length > 0 && (
+            <Group key={k} title="Notes" more={type === "all" && results[k].length >= 6 ? href(k) : undefined}>
               <div className="grid gap-3 sm:grid-cols-2">
                 {results[k].map((m) => {
                   const locked = m.is_premium && !access.canAccess(k);

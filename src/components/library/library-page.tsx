@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, Library, NotebookPen } from "lucide-react";
+import { Library } from "lucide-react";
 import type { Material, PremiumFeature } from "@/lib/types";
 import { getSessionUser } from "@/lib/auth/session";
 import { getAccess } from "@/lib/access";
@@ -21,17 +21,17 @@ export interface LibrarySearchParams {
 
 const str = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v) || undefined;
 
-export async function LibraryPage({ kind, searchParams }: { kind: "book" | "note"; searchParams: Record<string, string | string[] | undefined> }) {
+export async function LibraryPage({ kind, searchParams }: { kind: "note"; searchParams: Record<string, string | string[] | undefined> }) {
   const sp: LibrarySearchParams = {
     q: str(searchParams.q), exam: str(searchParams.exam), subject: str(searchParams.subject), language: str(searchParams.language),
     year: str(searchParams.year), sort: str(searchParams.sort), access: str(searchParams.access), page: str(searchParams.page),
   };
   const page = Math.max(1, Number(sp.page) || 1);
-  const feature: PremiumFeature = kind === "book" ? "books" : "notes";
-  const basePath = kind === "book" ? "/books" : "/notes";
-  const label = kind === "book" ? "Books" : "Notes";
+  const feature: PremiumFeature = "notes";
+  const basePath = "/notes";
+  const label = "Notes";
 
-  const [user, access, exams, subjects, years] = await Promise.all([getSessionUser(), getAccess(), getExams(), getSubjects(), materialYears(kind)]);
+  const [user, access, exams, subjects, years] = await Promise.all([getSessionUser(), getAccess(), getExams(), getSubjects(), materialYears()]);
   const filters = {
     q: sp.q, examId: sp.exam, subjectId: sp.subject, language: sp.language, year: sp.year ? Number(sp.year) : undefined,
     sort: sp.sort === "popular" ? ("popular" as const) : ("latest" as const),
@@ -53,11 +53,8 @@ export async function LibraryPage({ kind, searchParams }: { kind: "book" | "note
     <Container className="py-8 sm:py-10">
       <PageHeader
         eyebrow="Digital library"
-        title={kind === "book" ? "Books" : "Study Notes"}
-        description={kind === "book"
-          ? "Original books and practice workbooks prepared for Uttarakhand government exams. Read online, preview or download."
-          : "Concise, exam-focused notes for quick revision across UKPSC, UKSSSC, Police and other Uttarakhand exams."}
-        actions={<ButtonLink href={kind === "book" ? "/notes" : "/books"} variant="outline" size="sm">{kind === "book" ? <NotebookPen className="h-4 w-4" /> : <BookOpen className="h-4 w-4" />}Browse {kind === "book" ? "Notes" : "Books"}</ButtonLink>}
+        title="Study Notes"
+        description="Concise, exam-focused notes for quick revision across UKPSC, UKSSSC, Police and other Uttarakhand exams."
       />
 
       <div className="mt-6">

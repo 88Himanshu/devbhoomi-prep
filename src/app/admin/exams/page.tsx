@@ -12,18 +12,18 @@ export const metadata = { title: "Exams" };
 
 export default async function ExamsAdmin() {
   const store = await adminDb();
-  const [exams, tests, papers, books, notes] = await Promise.all([
+  const [exams, tests, papers, notes] = await Promise.all([
     store.select("exams", { order: [{ column: "sort_order" }] }),
-    store.select("mock_tests"), store.select("previous_year_papers"), store.select("books"), store.select("notes"),
+    store.select("mock_tests"), store.select("previous_year_papers"), store.select("notes"),
   ]);
   const count = (id: string) => ({
     tests: tests.filter((t) => t.exam_id === id).length,
     papers: papers.filter((p) => p.exam_id === id).length,
-    materials: [...books, ...notes].filter((m) => m.exam_ids.includes(id)).length,
+    materials: notes.filter((m) => m.exam_ids.includes(id)).length,
   });
   return (
     <div>
-      <PageHeader title="Exams" description="Each exam gets a public page with syllabus, pattern, books, papers and mock tests." className="mb-5" actions={<ButtonLink href="/admin/exams/new" size="sm"><Plus className="h-4 w-4" aria-hidden="true" /> Add exam</ButtonLink>} />
+      <PageHeader title="Exams" description="Each exam gets a public page with syllabus, pattern, notes, papers and mock tests." className="mb-5" actions={<ButtonLink href="/admin/exams/new" size="sm"><Plus className="h-4 w-4" aria-hidden="true" /> Add exam</ButtonLink>} />
       <Table>
         <thead><tr><Th>#</Th><Th>Exam</Th><Th>Category</Th><Th>Content</Th><Th>Featured</Th><Th>Active</Th><Th className="text-right">Actions</Th></tr></thead>
         <tbody>

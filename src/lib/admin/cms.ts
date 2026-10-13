@@ -51,7 +51,7 @@ export async function saveTrialSettings(prev: ActionState | null, formData: Form
   if (!Number.isInteger(days) || days < 0 || days > 365) return fail({ trial_days: "Enter 0–365 days" });
   const value: TrialSettings = {
     trial_days: days,
-    books: bool(formData, "books"), notes: bool(formData, "notes"), papers: bool(formData, "papers"),
+    notes: bool(formData, "notes"), papers: bool(formData, "papers"),
     mock_tests: bool(formData, "mock_tests"), solutions: bool(formData, "solutions"), analytics: bool(formData, "analytics"),
   };
   await (await adminDb()).upsert("settings", { key: "trial", value, updated_at: new Date().toISOString() });

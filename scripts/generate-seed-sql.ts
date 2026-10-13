@@ -7,12 +7,12 @@ import { writeFileSync } from "node:fs";
 import path from "node:path";
 import { getSeedData } from "../src/data/seed";
 
-const TABLES = ["subjects", "exams", "books", "notes", "previous_year_papers", "questions", "mock_tests", "mock_test_questions", "announcements", "settings"] as const;
+const TABLES = ["subjects", "exams", "notes", "previous_year_papers", "questions", "mock_tests", "mock_test_questions", "announcements", "settings"] as const;
 const JSONB: Record<string, string[]> = {
   exams: ["eligibility", "syllabus", "exam_pattern", "study_plan", "important_question_ids"],
   settings: ["value"],
 };
-const TEXT_ARRAY: Record<string, string[]> = { books: ["exam_ids"], notes: ["exam_ids"] };
+const TEXT_ARRAY: Record<string, string[]> = { notes: ["exam_ids"] };
 const PK: Record<string, string> = { settings: "key" };
 
 const q = (s: string) => `'${s.replace(/'/g, "''")}'`;

@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
  * (debounced) so the dashboard can show "Continue reading".
  */
 export function MaterialReader({ src, itemType, itemId, pages, initialPage, initialPercent, canSave }: {
-  src: string; itemType: "book" | "note"; itemId: string; pages: number; initialPage: number; initialPercent: number; canSave: boolean;
+  src: string; itemType: "note"; itemId: string; pages: number; initialPage: number; initialPercent: number; canSave: boolean;
 }) {
   const [page, setPage] = useState(Math.min(Math.max(1, initialPage), Math.max(1, pages)));
   const [full, setFull] = useState(false);

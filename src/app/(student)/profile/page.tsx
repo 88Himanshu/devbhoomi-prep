@@ -92,7 +92,7 @@ export default async function ProfilePage() {
             {!access.isAdmin && !sub && !access.trialActive && (
               <>
                 <p className="font-semibold text-ink-900">No active subscription</p>
-                <p className="text-ink-700">Your free trial ended on {formatDate(access.trialEndsAt)}. Free content remains available; premium books, papers and tests are locked.</p>
+                <p className="text-ink-700">Your free trial ended on {formatDate(access.trialEndsAt)}. Free content remains available; premium notes, papers and tests are locked.</p>
                 <ButtonLink href="/pricing" size="sm">See plans from ₹199/month</ButtonLink>
               </>
             )}

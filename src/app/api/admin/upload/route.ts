@@ -8,7 +8,7 @@ const ALLOWED: Record<string, string[]> = {
   "application/vnd.ms-excel": [".csv"],
   "text/plain": [".csv"],
 };
-const FOLDERS = new Set(["books", "notes", "papers", "misc"]);
+const FOLDERS = new Set(["notes", "papers", "misc"]);
 
 /** Admin file upload (PDF / CSV) → storage key. Used by <FileField/>. */
 export async function POST(req: Request) {
@@ -25,6 +25,6 @@ export async function POST(req: Request) {
   if (!okType) return Response.json({ error: "Only PDF or CSV files are allowed" }, { status: 415 });
   const buf = Buffer.from(await file.arrayBuffer());
   if (ext === ".pdf" && buf.subarray(0, 5).toString() !== "%PDF-") return Response.json({ error: "File is not a valid PDF" }, { status: 415 });
-  const key = await putObject(uploadKey(folder as "books" | "notes" | "papers" | "misc", file.name), buf, ext === ".pdf" ? "application/pdf" : "text/csv");
+  const key = await putObject(uploadKey(folder as "notes" | "papers" | "misc", file.name), buf, ext === ".pdf" ? "application/pdf" : "text/csv");
   return Response.json({ key, size: file.size, name: file.name });
 }

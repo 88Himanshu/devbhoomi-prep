@@ -8,7 +8,7 @@ import { env, getBackend, isStaticSite } from "@/lib/env";
  * File storage for PDFs and uploads.
  *  - demo:     files live under .data/uploads/<key> (bundled samples under public/samples)
  *  - supabase: private Storage bucket; objects are streamed through /api/files with access checks
- * Keys are relative paths like "books/2026/uk-gk-notes.pdf" or "samples/sample-paper.pdf".
+ * Keys are relative paths like "notes/2026/uk-gk-notes.pdf" or "samples/sample-paper.pdf".
  */
 
 const UPLOAD_DIR = path.join(process.cwd(), ".data", "uploads");
@@ -70,7 +70,7 @@ export async function deleteObject(key: string): Promise<void> {
 }
 
 /** Build a storage key for an admin upload. */
-export function uploadKey(folder: "books" | "notes" | "papers" | "misc", filename: string): string {
+export function uploadKey(folder: "notes" | "papers" | "misc", filename: string): string {
   const base = filename.toLowerCase().replace(/[^a-z0-9.]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80) || "file";
   return `${folder}/${new Date().getFullYear()}/${Date.now().toString(36)}-${base}`;
 }

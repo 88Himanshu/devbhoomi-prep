@@ -75,7 +75,7 @@ export function SearchBox({ className, autoFocus, defaultValue = "", size = "sm"
           onKeyDown={onKey}
           autoFocus={autoFocus}
           autoComplete="off"
-          placeholder="Search exams, books, notes, tests…"
+          placeholder="Search exams, notes, tests…"
           aria-label="Search the platform"
           role="combobox"
           aria-expanded={open && items.length > 0}

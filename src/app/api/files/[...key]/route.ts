@@ -32,7 +32,7 @@ export async function GET(request: NextRequest, ctx: RouteContext<"/api/files/[.
     if (!user) return Response.json({ error: "Authentication required" }, { status: 401 });
     if (owner.record.is_premium) {
       const access = await getAccessForUser(user);
-      const feature = owner.kind === "paper" ? "papers" : owner.kind === "book" ? "books" : "notes";
+      const feature = owner.kind === "paper" ? "papers" : "notes";
       if (!access.canAccess(feature)) {
         return Response.json({ error: "Premium subscription required", code: "PREMIUM_REQUIRED", feature }, { status: 402 });
       }

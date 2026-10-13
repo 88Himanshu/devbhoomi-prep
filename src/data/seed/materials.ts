@@ -18,11 +18,11 @@ type Spec = [
   author?: string,
 ];
 
-function build(kind: "book" | "note", prefix: string, specs: Spec[], featured: number[]): Material[] {
+function build(kind: "note", prefix: string, specs: Spec[], featured: number[]): Material[] {
   return specs.map((s, i) => {
     const n = i + 1;
     const [title, slug, description, subject_id, exam_ids, language, year, pages, is_premium, author] = s;
-    const seed = (n * 37 + (kind === "book" ? 11 : 23)) % 100;
+    const seed = (n * 37 + 23) % 100;
     return {
       id: `${prefix}${String(n).padStart(3, "0")}`,
       kind,
@@ -49,27 +49,6 @@ function build(kind: "book" | "note", prefix: string, specs: Spec[], featured: n
   });
 }
 
-const bookSpecs: Spec[] = [
-  ["Uttarakhand GK Complete Notes (Hindi)", "uttarakhand-gk-complete-notes-hindi", "उत्तराखंड का इतिहास, भूगोल, संस्कृति, प्रशासन और समसामयिक तथ्यों का सम्पूर्ण संकलन। UKSSSC, पुलिस और पटवारी परीक्षाओं के लिए अध्यायवार अभ्यास प्रश्न सहित।", "sub_uk_gk", ["exam_uksssc", "exam_police", "exam_patwari", "exam_vdo"], "hi", 2026, 320, true],
-  ["Uttarakhand General Knowledge: The Complete Reference", "uttarakhand-gk-complete-reference", "Chapter-wise coverage of Uttarakhand history, geography, polity, economy, culture and environment with 900+ practice MCQs and key facts tables.", "sub_uk_gk", ["exam_ukpsc", "exam_uksssc", "exam_forest_guard"], "en", 2026, 384, true],
-  ["UKSSSC Graduate Level: 1500 Practice MCQs", "uksssc-graduate-level-1500-mcqs", "Subject-wise practice sets modelled on the UKSSSC Graduate Level pattern, with answer keys and short explanations for every question.", "sub_gs", ["exam_uksssc", "exam_junior_assistant"], "bilingual", 2025, 296, true],
-  ["Reasoning Practice Workbook Vol. 1", "reasoning-practice-workbook-vol-1", "Coding-decoding, series, blood relations, syllogism, direction sense and puzzles with graded difficulty and solved examples.", "sub_reasoning", ["exam_uksssc", "exam_police", "exam_patwari", "exam_junior_assistant"], "en", 2024, 210, false],
-  ["Reasoning Practice Workbook Vol. 2", "reasoning-practice-workbook-vol-2", "Advanced analytical and non-verbal reasoning: seating arrangement, data sufficiency, mirror images and cube problems.", "sub_reasoning", ["exam_uksssc", "exam_ukpsc"], "en", 2025, 198, true],
-  ["Quantitative Aptitude for Uttarakhand Exams", "quantitative-aptitude-uttarakhand-exams", "Arithmetic, percentages, ratio, time & work, speed-distance, mensuration and data interpretation with shortcut methods and 1200 solved problems.", "sub_math", ["exam_uksssc", "exam_police", "exam_patwari", "exam_forest_guard"], "bilingual", 2025, 360, true],
-  ["सामान्य हिंदी: व्याकरण एवं अभ्यास", "samanya-hindi-vyakaran-abhyas", "संधि, समास, विलोम, पर्यायवाची, मुहावरे-लोकोक्तियाँ, वर्तनी शुद्धि और अपठित गद्यांश पर आधारित अभ्यास प्रश्नों सहित सम्पूर्ण हिंदी व्याकरण।", "sub_hindi", ["exam_uksssc", "exam_patwari", "exam_vdo", "exam_police"], "hi", 2025, 268, true],
-  ["English Grammar & Comprehension Essentials", "english-grammar-comprehension-essentials", "Parts of speech, tenses, error spotting, sentence improvement, vocabulary and reading comprehension for state-level competitive exams.", "sub_english", ["exam_uksssc", "exam_junior_assistant", "exam_teaching"], "en", 2024, 224, false],
-  ["Indian Polity Simplified", "indian-polity-simplified", "Constitution, fundamental rights, Parliament, judiciary, Panchayati Raj and constitutional bodies explained with charts and previous-year questions.", "sub_gs", ["exam_ukpsc", "exam_uksssc"], "en", 2025, 340, true],
-  ["Indian History: Ancient to Modern (NCERT-based Summary)", "indian-history-ncert-based-summary", "Concise summary of NCERT history textbooks (Class 6–12) organised for competitive exams, with timelines and revision points.", "sub_gs", ["exam_ukpsc", "exam_uksssc", "exam_teaching"], "en", 2023, 300, false, PUBLIC],
-  ["Geography of India & Uttarakhand", "geography-india-uttarakhand", "Physical, economic and human geography of India with a dedicated section on Uttarakhand's rivers, glaciers, districts and climate.", "sub_gs", ["exam_ukpsc", "exam_uksssc", "exam_forest_guard"], "bilingual", 2025, 312, true],
-  ["Environment, Ecology & Forestry for Forest Guard", "environment-ecology-forestry-forest-guard", "Forest types, wildlife acts, national parks and sanctuaries of Uttarakhand, biodiversity and climate change with 500 MCQs.", "sub_env", ["exam_forest_guard", "exam_ukpsc"], "bilingual", 2025, 240, true],
-  ["Computer Fundamentals for Junior Assistant & Group C", "computer-fundamentals-junior-assistant", "Hardware, software, MS Office, internet, email, cyber security basics and typing test guidance for clerical exams.", "sub_computer", ["exam_junior_assistant", "exam_group_c", "exam_uksssc"], "en", 2024, 180, false],
-  ["Child Development & Pedagogy for UTET", "child-development-pedagogy-utet", "Theories of learning, inclusive education, assessment, and classroom management aligned to UTET Paper I and II.", "sub_pedagogy", ["exam_utet", "exam_teaching"], "bilingual", 2025, 256, true],
-  ["Uttarakhand Police Constable Practice Book", "uttarakhand-police-constable-practice-book", "Ten full-length practice sets covering GK, reasoning, numerical ability and Uttarakhand-specific questions with detailed answers.", "sub_uk_gk", ["exam_police"], "hi", 2025, 288, false],
-  ["Patwari / Lekhpal Complete Guide", "patwari-lekhpal-complete-guide", "Land records terminology, Uttarakhand revenue administration, GK, Hindi and arithmetic in one structured guide.", "sub_uk_gk", ["exam_patwari"], "bilingual", 2026, 330, true],
-  ["General Science Made Easy", "general-science-made-easy", "Physics, chemistry and biology fundamentals from NCERT Class 6–10 summarised for objective exams with formula sheets.", "sub_gs", ["exam_uksssc", "exam_police", "exam_forest_guard"], "en", 2023, 260, false, PUBLIC],
-  ["Current Affairs Yearbook 2025–26", "current-affairs-yearbook-2025-26", "Monthly compiled national, international and Uttarakhand current affairs with schemes, awards, sports and reports.", "sub_current", ["exam_ukpsc", "exam_uksssc", "exam_police", "exam_vdo"], "bilingual", 2026, 400, true],
-];
-
 const noteSpecs: Spec[] = [
   ["Uttarakhand Geography Quick Revision", "uttarakhand-geography-quick-revision", "One-stop revision of Uttarakhand's physiography, rivers, glaciers, lakes, passes, districts and climate with maps.", "sub_uk_gk", ["exam_uksssc", "exam_police", "exam_patwari"], "en", 2026, 48, false],
   ["Uttarakhand History: Freedom Movement to Statehood", "uttarakhand-history-freedom-statehood", "Kumaon and Garhwal freedom struggle, Coolie-Begar, Tehri Rajya Andolan, Chipko and the statehood movement in concise notes.", "sub_uk_gk", ["exam_uksssc", "exam_ukpsc", "exam_vdo"], "bilingual", 2025, 64, true],
@@ -91,5 +70,4 @@ const noteSpecs: Spec[] = [
   ["Government Schemes of Uttarakhand", "government-schemes-uttarakhand", "Major state welfare schemes with launch year, department, beneficiaries and objectives.", "sub_current", ["exam_uksssc", "exam_vdo", "exam_ukpsc"], "en", 2026, 44, true],
 ];
 
-export const books: Material[] = build("book", "book_", bookSpecs, [1, 3]);
 export const notes: Material[] = build("note", "note_", noteSpecs, [1, 17]);

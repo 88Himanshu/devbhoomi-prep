@@ -89,7 +89,7 @@ function PlanCard({ name, price, period, badge, highlight, features, cta, note }
 }
 
 export const COMPARISON_ROWS: { feature: string; trial: string | boolean; paid: string | boolean }[] = [
-  { feature: "Books & Notes library", trial: "Selected titles", paid: "Full library" },
+  { feature: "Notes library", trial: "Selected titles", paid: "Full library" },
   { feature: "Previous year papers", trial: "Selected papers", paid: "All papers + attempt as mock" },
   { feature: "Mock tests", trial: "Selected tests", paid: "Unlimited" },
   { feature: "Detailed solutions", trial: true, paid: true },

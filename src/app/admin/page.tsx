@@ -18,13 +18,13 @@ export default async function AdminOverview() {
   const now = new Date();
   const weekAgo = new Date(now.getTime() - 7 * 86_400_000).toISOString();
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-  const [users, profiles, subs, payments, attemptsWeek, books, notes, questions, tests] = await Promise.all([
+  const [users, profiles, subs, payments, attemptsWeek, notes, questions, tests] = await Promise.all([
     store.select("users"),
     store.select("profiles"),
     store.select("subscriptions", { eq: { status: "active" } }),
     store.select("payments", { order: [{ column: "created_at", ascending: false }] }),
     store.count("test_attempts", { eq: { status: "submitted" }, gte: { created_at: weekAgo } }),
-    store.count("books"), store.count("notes"), store.count("questions"), store.count("mock_tests"),
+    store.count("notes"), store.count("questions"), store.count("mock_tests"),
   ]);
   const umap = new Map(users.map((u) => [u.id, u]));
   const students = users.filter((u) => u.role === "student");
@@ -56,7 +56,7 @@ export default async function AdminOverview() {
         <Stat label="Active subscriptions" value={formatNumber(activeSubs)} icon={Wallet} tone="forest" />
         <Stat label="Revenue this month" value={formatINR(revenueMonth)} hint={`${paid.length} paid payments total`} icon={CreditCard} tone="forest" />
         <Stat label="Tests attempted (7d)" value={formatNumber(attemptsWeek)} icon={ClipboardList} />
-        <Stat label="Study materials" value={formatNumber(books + notes)} hint={`${books} books · ${notes} notes`} icon={BookOpen} tone="neutral" />
+        <Stat label="Study materials" value={formatNumber(notes)} hint={`${notes} notes`} icon={BookOpen} tone="neutral" />
         <Stat label="Questions in bank" value={formatNumber(questions)} icon={FileQuestion} tone="neutral" />
         <Stat label="Mock tests" value={formatNumber(tests)} icon={ClipboardList} tone="neutral" />
       </div>

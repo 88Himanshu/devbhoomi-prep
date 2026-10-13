@@ -29,7 +29,7 @@ export default function TermsPage() {
       </section>
       <section>
         <h2>4. Content and licence</h2>
-        <p>All notes, books, questions, solutions and analytics on the platform are either created by us, licensed to us, in the public domain or distributed with authorisation. We grant you a personal, non-transferable licence to use them for your own exam preparation. You may not copy, share, sell, publish or redistribute any material, including downloaded PDFs.</p>
+        <p>All notes, questions, solutions and analytics on the platform are either created by us, licensed to us, in the public domain or distributed with authorisation. We grant you a personal, non-transferable licence to use them for your own exam preparation. You may not copy, share, sell, publish or redistribute any material, including downloaded PDFs.</p>
       </section>
       <section>
         <h2>5. No guarantee of results</h2>

@@ -20,7 +20,6 @@ export default async function SettingsAdmin() {
   const trial: TrialSettings = { ...DEFAULT_TRIAL, ...((trialRow?.value as Partial<TrialSettings>) ?? {}) };
   const site = (siteRow?.value ?? {}) as Record<string, string>;
   const features: { key: keyof Omit<TrialSettings, "trial_days">; label: string; hint: string }[] = [
-    { key: "books", label: "Premium books", hint: "Read & download premium books" },
     { key: "notes", label: "Premium notes", hint: "Read & download premium notes" },
     { key: "papers", label: "Premium previous-year papers", hint: "View, download and attempt" },
     { key: "mock_tests", label: "Premium mock tests", hint: "Attempt premium tests" },

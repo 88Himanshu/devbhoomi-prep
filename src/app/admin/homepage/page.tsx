@@ -21,10 +21,9 @@ export default async function HomepageAdmin(props: PageProps<"/admin/homepage">)
   const sp = await props.searchParams;
   const editId = sp1(sp.edit);
   const store = await adminDb();
-  const [announcements, exams, books, notes] = await Promise.all([
+  const [announcements, exams, notes] = await Promise.all([
     store.select("announcements", { order: [{ column: "created_at", ascending: false }] }),
     store.select("exams", { order: [{ column: "sort_order" }] }),
-    store.select("books", { order: [{ column: "title" }] }),
     store.select("notes", { order: [{ column: "title" }] }),
   ]);
   const editing = announcements.find((a) => a.id === editId) ?? null;
@@ -95,7 +94,7 @@ export default async function HomepageAdmin(props: PageProps<"/admin/homepage">)
           <CardHeader><CardTitle>Featured materials</CardTitle></CardHeader>
           <CardContent>
             <form action={saveFeaturedMaterials} className="space-y-4">
-              {([["books", books], ["notes", notes]] as const).map(([table, rows]) => (
+              {([["notes", notes]] as const).map(([table, rows]) => (
                 <div key={table}>
                   <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-ink-500">{table}</p>
                   <div className="max-h-56 space-y-1 overflow-y-auto rounded-lg border border-ink-200 p-2 scrollbar-thin">

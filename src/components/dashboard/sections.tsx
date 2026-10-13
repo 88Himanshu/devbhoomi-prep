@@ -25,9 +25,9 @@ function SectionCard({ title, icon: Icon, href, hrefLabel = "View all", children
 export function ContinueLearning({ items, inProgress }: { items: ContinueItem[]; inProgress: TestAttempt | null }) {
   const empty = items.length === 0 && !inProgress;
   return (
-    <SectionCard title="Continue learning" icon={Play} href="/books" hrefLabel="Browse library">
+    <SectionCard title="Continue learning" icon={Play} href="/notes" hrefLabel="Browse library">
       {empty ? (
-        <EmptyState icon={BookOpen} title="Nothing in progress" description="Open a book or note from the library and your place is saved here." className="py-8" />
+        <EmptyState icon={BookOpen} title="Nothing in progress" description="Open a note from the library and your place is saved here." className="py-8" />
       ) : (
         <ul className="grid gap-3">
           {inProgress && (
@@ -40,13 +40,13 @@ export function ContinueLearning({ items, inProgress }: { items: ContinueItem[];
               <ButtonLink href={`/tests/attempt/${inProgress.id}`} size="sm" variant="saffron">Resume</ButtonLink>
             </li>
           )}
-          {items.map(({ kind, material, progress }) => (
+          {items.map(({ material, progress }) => (
             <li key={progress.id} className="flex items-center gap-3">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white" style={{ background: material.cover_color }}>
-                {kind === "book" ? <BookOpen className="h-4 w-4" aria-hidden="true" /> : <NotebookPen className="h-4 w-4" aria-hidden="true" />}
+                <NotebookPen className="h-4 w-4" aria-hidden="true" />
               </span>
               <div className="min-w-0 flex-1">
-                <Link href={`/${kind === "book" ? "books" : "notes"}/${material.slug}`} className="block truncate text-sm font-medium text-ink-900 hover:text-brand-700">{material.title}</Link>
+                <Link href={`/notes/${material.slug}`} className="block truncate text-sm font-medium text-ink-900 hover:text-brand-700">{material.title}</Link>
                 <div className="mt-1 flex items-center gap-2">
                   <Progress value={progress.progress_percent} className="h-1.5" label={`${material.title} progress`} />
                   <span className="shrink-0 text-xs text-ink-500">{progress.progress_percent}%{progress.last_position ? ` · p.${progress.last_position}` : ""}</span>
@@ -118,18 +118,18 @@ export function RecentTests({ attempts }: { attempts: TestAttempt[] }) {
   );
 }
 
-export function SavedMaterials({ items, questionCount, testCount }: { items: { kind: "book" | "note"; material: { id: string; title: string; slug: string; cover_color: string } }[]; questionCount: number; testCount: number }) {
+export function SavedMaterials({ items, questionCount, testCount }: { items: { kind: "note"; material: { id: string; title: string; slug: string; cover_color: string } }[]; questionCount: number; testCount: number }) {
   return (
-    <SectionCard title="Saved books & notes" icon={Bookmark} href="/bookmarks" hrefLabel="My bookmarks">
+    <SectionCard title="Saved notes" icon={Bookmark} href="/bookmarks" hrefLabel="My bookmarks">
       {items.length === 0 ? (
-        <p className="text-sm text-ink-500">Tap the bookmark icon on any book or note to save it here.</p>
+        <p className="text-sm text-ink-500">Tap the bookmark icon on any note to save it here.</p>
       ) : (
         <ul className="grid gap-2">
           {items.map(({ kind, material }) => (
             <li key={`${kind}-${material.id}`} className="flex items-center gap-3">
               <span className="h-8 w-6 shrink-0 rounded-sm" style={{ background: material.cover_color }} aria-hidden="true" />
-              <Link href={`/${kind === "book" ? "books" : "notes"}/${material.slug}`} className="min-w-0 flex-1 truncate text-sm font-medium text-ink-900 hover:text-brand-700">{material.title}</Link>
-              <Badge>{kind === "book" ? "Book" : "Note"}</Badge>
+              <Link href={`/notes/${material.slug}`} className="min-w-0 flex-1 truncate text-sm font-medium text-ink-900 hover:text-brand-700">{material.title}</Link>
+              <Badge>Note</Badge>
             </li>
           ))}
         </ul>

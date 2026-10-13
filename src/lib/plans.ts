@@ -10,7 +10,7 @@ export const PLANS: Plan[] = [
     badge: null,
     savings: null,
     features: [
-      "Full Books & Notes Library",
+      "Full Notes Library",
       "All Previous Year Papers",
       "Unlimited Mock Tests",
       "Detailed Solutions",

@@ -125,7 +125,7 @@ export function FinalCta({ signedIn }: { signedIn: boolean }) {
       <div className="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-forest-600/40 blur-3xl" aria-hidden="true" />
       <div className="relative">
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Start preparing for your Uttarakhand exam today</h2>
-        <p className="mx-auto mt-3 max-w-xl text-brand-100">30 days free. Books, notes, previous-year papers, mock tests and analytics in one place.</p>
+        <p className="mx-auto mt-3 max-w-xl text-brand-100">30 days free. Notes, previous-year papers, mock tests and analytics in one place.</p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           {signedIn ? (
             <ButtonLink href="/dashboard" variant="saffron" size="lg">Go to Dashboard</ButtonLink>

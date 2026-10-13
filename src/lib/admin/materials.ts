@@ -9,9 +9,9 @@ import { slugify } from "@/lib/utils";
 import type { Material } from "@/lib/types";
 import { bool, fail, list, num, opt, str, toastRedirect, zodErrors, type ActionState } from "./helpers";
 
-const kindOf = (fd: FormData): "book" | "note" => (str(fd, "kind") === "note" ? "note" : "book");
-const tableOf = (kind: "book" | "note") => (kind === "book" ? ("books" as const) : ("notes" as const));
-const pathOf = (kind: "book" | "note") => `/admin/${tableOf(kind)}`;
+const kindOf = (): "note" => "note";
+const tableOf = () => "notes" as const;
+const pathOf = () => "/admin/notes";
 
 const schema = z.object({
   title: z.string().min(3).max(160),
@@ -28,8 +28,8 @@ const schema = z.object({
 
 export async function saveMaterial(prev: ActionState | null, formData: FormData): Promise<ActionState> {
   await requireAdmin();
-  const kind = kindOf(formData);
-  const table = tableOf(kind);
+  const kind = kindOf();
+  const table = tableOf();
   const id = str(formData, "id") || null;
   const parsed = schema.safeParse({
     title: str(formData, "title"), slug: str(formData, "slug") || slugify(str(formData, "title")),
@@ -64,44 +64,43 @@ export async function saveMaterial(prev: ActionState | null, formData: FormData)
   } else {
     await store.insert(table, { ...payload, downloads: 0, views: 0 });
   }
-  revalidatePath(pathOf(kind));
+  revalidatePath(pathOf());
   revalidatePath(`/${table}`);
-  toastRedirect(pathOf(kind), "ok", `${payload.title} ${id ? "updated" : "created"}`);
+  toastRedirect(pathOf(), "ok", `${payload.title} ${id ? "updated" : "created"}`);
 }
 
 export async function deleteMaterial(formData: FormData) {
   await requireAdmin();
-  const kind = kindOf(formData);
-  const table = tableOf(kind);
+  const kind = kindOf();
+  const table = tableOf();
   const id = str(formData, "id");
   const store = await adminDb();
   const row = await store.getById(table, id);
-  if (!row) toastRedirect(pathOf(kind), "err", "Not found");
+  if (!row) toastRedirect(pathOf(), "err", "Not found");
   if (row.file_path) await deleteObject(row.file_path).catch(() => undefined);
   if (row.preview_path) await deleteObject(row.preview_path).catch(() => undefined);
   await store.delete(table, id);
   await store.deleteWhere("bookmarks", { eq: { item_type: kind, item_id: id } });
-  revalidatePath(pathOf(kind));
+  revalidatePath(pathOf());
   revalidatePath(`/${table}`);
-  toastRedirect(pathOf(kind), "ok", `${row.title} deleted`);
+  toastRedirect(pathOf(), "ok", `${row.title} deleted`);
 }
 
 export async function toggleMaterialFlag(formData: FormData) {
   await requireAdmin();
-  const kind = kindOf(formData);
-  const table = tableOf(kind);
+  const table = tableOf();
   const field = (["is_premium", "is_published", "is_featured"] as const).find((f) => f === str(formData, "field")) ?? "is_published";
   const store = await adminDb();
   await store.update(table, str(formData, "id"), { [field]: str(formData, "value") === "1" });
-  revalidatePath(pathOf(kind));
+  revalidatePath(pathOf());
   revalidatePath(`/${table}`);
-  toastRedirect(str(formData, "return") || pathOf(kind), "ok", "Updated");
+  toastRedirect(str(formData, "return") || pathOf(), "ok", "Updated");
 }
 
 export async function saveFeaturedMaterials(formData: FormData) {
   await requireAdmin();
   const store = await adminDb();
-  for (const table of ["books", "notes"] as const) {
+  for (const table of ["notes"] as const) {
     const rows = await store.select(table);
     for (const r of rows) {
       const want = bool(formData, `featured_${table}_${r.id}`);

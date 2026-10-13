@@ -10,7 +10,6 @@ alter table public.users enable row level security;
 alter table public.profiles enable row level security;
 alter table public.subjects enable row level security;
 alter table public.exams enable row level security;
-alter table public.books enable row level security;
 alter table public.notes enable row level security;
 alter table public.previous_year_papers enable row level security;
 alter table public.questions enable row level security;
@@ -33,7 +32,6 @@ create policy "profiles: own" on public.profiles for all using (user_id = auth.u
 -- Public catalogue (published rows readable by everyone; premium gating is enforced in app code)
 create policy "subjects: public read" on public.subjects for select using (true);
 create policy "exams: public read" on public.exams for select using (is_active or public.is_admin());
-create policy "books: public read" on public.books for select using (is_published or public.is_admin());
 create policy "notes: public read" on public.notes for select using (is_published or public.is_admin());
 create policy "papers: public read" on public.previous_year_papers for select using (is_published or public.is_admin());
 create policy "mock_tests: public read" on public.mock_tests for select using (is_published or public.is_admin());
@@ -45,7 +43,6 @@ create policy "settings: public read" on public.settings for select using (true)
 -- Admin catalogue writes
 create policy "subjects: admin write" on public.subjects for all using (public.is_admin()) with check (public.is_admin());
 create policy "exams: admin write" on public.exams for all using (public.is_admin()) with check (public.is_admin());
-create policy "books: admin write" on public.books for all using (public.is_admin()) with check (public.is_admin());
 create policy "notes: admin write" on public.notes for all using (public.is_admin()) with check (public.is_admin());
 create policy "papers: admin write" on public.previous_year_papers for all using (public.is_admin()) with check (public.is_admin());
 create policy "questions: admin write" on public.questions for all using (public.is_admin()) with check (public.is_admin());

@@ -9,9 +9,9 @@ import { Alert } from "@/components/ui/misc";
 
 const COLORS = ["#163e86", "#1e4fa3", "#0f2f6b", "#1b7f4f", "#166a42", "#23905c", "#b07200"];
 
-export function MaterialForm({ kind, material, subjects, exams }: { kind: "book" | "note"; material?: Material | null; subjects: Subject[]; exams: Exam[] }) {
+export function MaterialForm({ kind, material, subjects, exams }: { kind: "note"; material?: Material | null; subjects: Subject[]; exams: Exam[] }) {
   const back = `/admin/${kind}s`;
-  const label = kind === "book" ? "book" : "note";
+  const label = "note";
   return (
     <FormShell
       title={material ? `Edit ${material.title}` : `New ${label}`}
@@ -55,8 +55,8 @@ export function MaterialForm({ kind, material, subjects, exams }: { kind: "book"
             </div>
           </div>
           <Grid2>
-            <FileField name="file_path" label="PDF file" folder={kind === "book" ? "books" : "notes"} initialKey={material?.file_path} hint="PDF up to 25 MB. Served through /api/files with access checks." />
-            <FileField name="preview_path" label="Preview PDF (optional)" folder={kind === "book" ? "books" : "notes"} initialKey={material?.preview_path} hint="First few pages, shown to everyone." />
+            <FileField name="file_path" label="PDF file" folder={"notes"} initialKey={material?.file_path} hint="PDF up to 25 MB. Served through /api/files with access checks." />
+            <FileField name="preview_path" label="Preview PDF (optional)" folder={"notes"} initialKey={material?.preview_path} hint="First few pages, shown to everyone." />
           </Grid2>
           <div className="grid gap-2 sm:grid-cols-3">
             <Toggle name="is_premium" label="Premium" hint="Locked without trial/subscription" defaultChecked={material?.is_premium ?? true} />

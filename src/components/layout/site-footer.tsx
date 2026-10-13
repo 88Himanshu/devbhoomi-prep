@@ -12,7 +12,7 @@ const columns = [
   },
   {
     title: "Prepare",
-    links: [["Books", "/books"], ["Notes", "/notes"], ["Previous Year Papers", "/previous-year-papers"], ["Mock Tests", "/mock-tests"], ["Pricing", "/pricing"], ["Search", "/search"]],
+    links: [["Notes", "/notes"], ["Previous Year Papers", "/previous-year-papers"], ["Mock Tests", "/mock-tests"], ["Pricing", "/pricing"], ["Search", "/search"]],
   },
   {
     title: "Company",
