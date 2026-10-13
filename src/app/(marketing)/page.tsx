@@ -3,14 +3,14 @@ import { getSessionUser } from "@/lib/auth/session";
 import { getAccess } from "@/lib/access";
 import { db } from "@/lib/data";
 import {
-  getActiveAnnouncements, getExamMap, getExams, getPlatformStats, getSubjectMap, listMaterials, listMockTests, listPapers,
+  getActiveAnnouncements, getExamMap, getExams, getPlatformStats, getSubjectMap, listMockTests, listPapers,
 } from "@/lib/services/catalog";
 import { JsonLd, organizationJsonLd, pageMetadata, websiteJsonLd } from "@/lib/seo";
 import { Container } from "@/components/ui/misc";
 import { ButtonLink } from "@/components/ui/button";
 import { HeroIllustration } from "@/components/marketing/hero-illustration";
 import { AnnouncementBanner, FinalCta, HowItWorks, Section, SectionHeader, Testimonials, TrustStrip } from "@/components/marketing/sections";
-import { MaterialCard, MockTestCard, PaperCard } from "@/components/marketing/catalog-cards";
+import { MockTestCard, PaperCard } from "@/components/marketing/catalog-cards";
 import { PricingCards, SecurePaymentNote } from "@/components/marketing/pricing";
 import { Faq } from "@/components/marketing/faq";
 import { DashboardPreview } from "@/components/marketing/dashboard-preview";
@@ -30,9 +30,8 @@ function roundLabel(n: number) {
 
 export default async function HomePage() {
   const user = await getSessionUser();
-  const [access, stats, exams, examMap, subjectMap, banners, notes, papers, tests, store] = await Promise.all([
+  const [access, stats, exams, examMap, subjectMap, banners, papers, tests, store] = await Promise.all([
     getAccess(), getPlatformStats(), getExams(), getExamMap(), getSubjectMap(), getActiveAnnouncements("banner"),
-    listMaterials("note", { featured: true, limit: 4 }),
     listPapers({ limit: 6 }), listMockTests({ limit: 6 }), db(),
   ]);
   const [mockCounts, paperCounts] = await Promise.all([
@@ -43,7 +42,6 @@ export default async function HomePage() {
   const mocksByExam = countBy(mockCounts);
   const papersByExam = countBy(paperCounts);
   const featuredExams = exams.filter((e) => e.is_featured).slice(0, 6);
-  const featuredMaterials = notes;
   const signedIn = Boolean(user);
 
   return (
@@ -96,15 +94,6 @@ export default async function HomePage() {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {featuredExams.map((exam) => (
             <ExamCard key={exam.id} exam={exam} mocks={mocksByExam[exam.id] ?? 0} papers={papersByExam[exam.id] ?? 0} />
-          ))}
-        </div>
-      </Section>
-
-      <Section id="materials">
-        <SectionHeader eyebrow="Study materials" title="Notes written for these exams" description="Original, exam-mapped notes in English, Hindi and bilingual editions." href="/notes" linkLabel="Browse library" />
-        <div className="grid gap-4 md:grid-cols-2">
-          {featuredMaterials.map((m) => (
-            <MaterialCard key={m.id} item={m} subject={subjectMap.get(m.subject_id)} locked={m.is_premium && !access.canAccess("notes")} />
           ))}
         </div>
       </Section>
