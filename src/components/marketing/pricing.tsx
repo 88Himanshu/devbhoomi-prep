@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Check, ShieldCheck } from "lucide-react";
-import { PLANS, formatINR } from "@/lib/plans";
+import { FREE_TRIAL_FEATURES, PLANS, formatINR } from "@/lib/plans";
 import type { AccessState, PlanId } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ButtonLink } from "@/components/ui/button";
@@ -11,11 +11,26 @@ export function planHref(planId: PlanId, signedIn: boolean) {
   return signedIn ? checkout : `/signup?next=${encodeURIComponent(checkout)}`;
 }
 
-/** The three paid plans. Shared by landing page and /pricing. */
+/** 7-day free-trial card + the three paid plans. Shared by landing page and /pricing. */
 export function PricingCards({ signedIn, access, compact }: { signedIn: boolean; access?: AccessState | null; compact?: boolean }) {
   const currentPlan = access?.subscriptionActive ? access.subscription?.plan_id : null;
+  const trialUsed = Boolean(access?.isAuthenticated);
   return (
-    <div className={cn("grid gap-5", compact ? "md:grid-cols-3" : "md:grid-cols-3")}>
+    <div className={cn("grid gap-5", compact ? "md:grid-cols-2 xl:grid-cols-4" : "md:grid-cols-2 lg:grid-cols-4")}>
+      <PlanCard
+        name="Free Trial"
+        price="₹0"
+        period="for 7 days"
+        features={FREE_TRIAL_FEATURES}
+        cta={
+          trialUsed ? (
+            <ButtonLink href="/dashboard" variant="outline" className="w-full">Go to dashboard</ButtonLink>
+          ) : (
+            <ButtonLink href="/signup" variant="outline" className="w-full">Start 7-day free trial</ButtonLink>
+          )
+        }
+        note="No card required"
+      />
       {PLANS.map((plan) => {
         const isCurrent = currentPlan === plan.id;
         return (
@@ -73,19 +88,19 @@ function PlanCard({ name, price, period, badge, highlight, features, cta, note }
   );
 }
 
-export const COMPARISON_ROWS: { feature: string; paid: string | boolean }[] = [
-  { feature: "Notes library", paid: "Full library" },
-  { feature: "Previous year papers", paid: "All papers + attempt as mock" },
-  { feature: "Mock tests", paid: "Unlimited" },
-  { feature: "Detailed solutions", paid: true },
-  { feature: "Performance analytics", paid: "Full (subject-wise, trends)" },
-  { feature: "Bookmarks & progress tracking", paid: true },
-  { feature: "Downloads (PDF)", paid: true },
-  { feature: "Support", paid: "Priority email" },
+export const COMPARISON_ROWS: { feature: string; trial: string | boolean; paid: string | boolean }[] = [
+  { feature: "Notes library", trial: "Selected titles", paid: "Full library" },
+  { feature: "Previous year papers", trial: "Selected papers", paid: "All papers + attempt as mock" },
+  { feature: "Mock tests", trial: "Selected tests", paid: "Unlimited" },
+  { feature: "Detailed solutions", trial: true, paid: true },
+  { feature: "Performance analytics", trial: "Basic", paid: "Full (subject-wise, trends)" },
+  { feature: "Bookmarks & progress tracking", trial: true, paid: true },
+  { feature: "Downloads (PDF)", trial: "Free titles only", paid: true },
+  { feature: "Support", trial: "Email", paid: "Priority email" },
 ];
 
 export function ComparisonTable() {
-  const cols = ["Monthly", "3 Months", "Yearly"];
+  const cols = ["7-Day Free Trial", "Monthly", "3 Months", "Yearly"];
   return (
     <div id="compare" className="overflow-x-auto rounded-2xl border border-ink-200 bg-white shadow-card">
       <table className="w-full min-w-[640px] text-sm">
@@ -99,6 +114,7 @@ export function ComparisonTable() {
           {COMPARISON_ROWS.map((row) => (
             <tr key={row.feature} className="border-t border-ink-100">
               <td className="px-5 py-3 font-medium text-ink-900">{row.feature}</td>
+              <Cell value={row.trial} />
               <Cell value={row.paid} />
               <Cell value={row.paid} />
               <Cell value={row.paid} />
@@ -106,6 +122,7 @@ export function ComparisonTable() {
           ))}
           <tr className="border-t border-ink-100 bg-ink-50/60">
             <td className="px-5 py-3 font-medium text-ink-900">Price</td>
+            <td className="px-5 py-3 text-ink-700">₹0 for 7 days</td>
             {PLANS.map((p) => <td key={p.id} className="px-5 py-3 font-semibold text-ink-900">{formatINR(p.price)}{p.period_label}</td>)}
           </tr>
         </tbody>
